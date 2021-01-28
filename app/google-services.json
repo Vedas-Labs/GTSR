@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "905220828966",
+    "firebase_url": "https://gtsr-c2262.firebaseio.com",
+    "project_id": "gtsr-c2262",
+    "storage_bucket": "gtsr-c2262.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905220828966:android:cb78497fc91a2acb6e9be7",
+        "android_client_info": {
+          "package_name": "com.gtsr.gtsr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905220828966-t33rbgod62up78em5ebhu0hdo0vmfcni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx_Ai_ZFS4iL1GlA8tTumZ3ZFZBxO-Fyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905220828966-t33rbgod62up78em5ebhu0hdo0vmfcni.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

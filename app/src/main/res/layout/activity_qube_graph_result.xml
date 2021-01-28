@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_color">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/backimage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/back" />
+
+            <TextView
+                android:id="@+id/tool_txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="70dp"
+                android:text="Test Results"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp" />
+            <ImageView
+                android:id="@+id/img_print"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:visibility="visible"
+                android:src="@drawable/print"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@id/img_share"
+                android:layout_centerVertical="true"
+                />
+
+            <ImageView
+                android:id="@+id/img_share"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/share"
+                android:layout_marginRight="10dp"
+                android:visibility="visible"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="20dp"
+            android:background="#6ebaf2">
+            <TextView
+                android:id="@+id/text_currentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="Test Date &amp;Time"
+                android:textColor="@color/colorWhite"
+                android:textSize="15dp" />
+
+
+            <TextView
+                android:id="@+id/txt_currentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:text="31 Feb 2020 15:00 PM"
+                android:textColor="@color/colorWhite"
+                android:textSize="15dp" />
+
+
+        </RelativeLayout>
+        <CheckBox
+            android:id="@+id/toggle_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date_layout"
+            android:layout_alignParentRight="true"
+            android:button="@drawable/toggle_button"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_fullview"
+            android:layout_below="@id/date_layout"
+            android:layout_toLeftOf="@id/toggle_btn"
+            android:padding="5dp"
+            android:layout_marginRight="5dp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_graph"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_below="@id/toolbar_layout"
+        android:layout_marginTop="5dp"
+        >
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart_combine_week"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="50dp"
+            android:textColor="@color/colorWhite" />
+
+
+        <RelativeLayout
+            android:layout_width="55dp"
+            android:layout_height="180dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true">
+
+            <RelativeLayout
+                android:id="@+id/layout_green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                >
+                <TextView
+                    android:id="@+id/txt_round"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/colorGreen"
+                    android:background="@drawable/btn_gradient"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" +"
+                    android:textColor="@color/colorBlack"
+                    android:layout_toRightOf="@id/txt_round"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/montserrat_bold"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/layout_pale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_green"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"                >
+                <TextView
+                    android:id="@+id/txt_pale"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/colorPale"
+                    android:background="@drawable/btn_gradient"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" +/-"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_toRightOf="@id/txt_pale"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_orange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_pale"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:id="@+id/txt_orange"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/colorOrange"
+                    android:background="@drawable/btn_gradient"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" -"
+                    android:layout_toRightOf="@id/txt_orange"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_bold"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_src"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/layout_graph"
+        android:backgroundTint="#E5E4E2"
+        android:background="@drawable/btn_color_background"
+        >
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SARS-COV-2 ANTIBODY"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_below="@id/txt_title"
+            android:weightSum="2"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="15.3 Index"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/montserrat"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="8dp"
+                >
+                <TextView
+                    android:id="@+id/txt_green"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:backgroundTint="@color/colorGreen"
+                    android:background="@drawable/btn_gradient"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Positive"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/colorGreen"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".testModule.TestActivity">
+    <RelativeLayout
+        android:id="@+id/relativetoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/my_gradient"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/back" />
+
+            <TextView
+                android:id="@+id/tool_txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Test Menu"
+                android:layout_marginRight="40dp"
+                android:singleLine="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp" />
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/file"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/ic_file"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl1"
+        android:layout_marginTop="80dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="START A NEW TEST"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:singleLine="false"
+            android:textColor="@color/colorlightblack"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please select a test item to start the test"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="55dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:singleLine="false"
+            android:textColor="@color/colorlightblack"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_r1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardCornerRadius="5dp"
+        android:elevation="10dp"
+        app:cardBackgroundColor="#f4f6f6"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/rl1"
+        >
+
+        <RelativeLayout
+            android:id="@+id/rl2"
+            android:layout_width="390dp"
+            android:layout_height="42dp"
+            android:layout_below="@+id/rl1">
+
+            <ImageView
+                android:id="@+id/urine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/urine" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="80dp"
+                android:fontFamily="@font/montserrat"
+                android:singleLine="false"
+                android:text="Urine Analysis"
+                android:textColor="@color/colorlightblack"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list1"
+        android:layout_below="@+id/card_r1"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listone"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_r2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardCornerRadius="5dp"
+        android:elevation="10dp"
+        app:cardBackgroundColor="#f4f6f6"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/list1"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/rl3"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/blood" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Blood"
+                android:layout_marginLeft="80dp"
+                android:fontFamily="@font/montserrat"
+                android:singleLine="false"
+                android:textColor="@color/colorlightblack"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_r2"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listtwo"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:text="Next"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/btn_gradient">
+    </Button>
+</RelativeLayout>

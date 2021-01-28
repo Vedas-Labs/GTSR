@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">GTSR</string>
+    <string name="labonhand_biomedical_co_ltd">LABONHAND Biomedical Co,. Ltd.</string>
+    <string name="recent_results">Recent Results</string>
+    <string name="gtsr">QUBE</string>
+    <string name="dowantanilizingtest">Do you want to abort the test?</string>
+    <string name="chattext">Normal urine with trace amounts of glucose, qualitative test was negetive. Urine positive may be disease.
+</string>
+    <string name="charttwo">Related diseases: diabetes, liver disease, kidney disease, hyperthyroidism or cortisol increased disease, pheochrmocytoma and other endocrine diseases: pregnancy
+</string>
+    <string name="warning">Warning: continuous check results for the positive as soon as possible go to the hospital.</string>
+    <string name="eject">Eject</string>
+
+    <string name="location_permission_title">Location permission required</string>
+    <string name="location_permission_message">This app does not use location information, but scanning for Bluetooth LE devices requires this permission</string>
+
+    <string name="location_denied_title">Location permission denied</string>
+    <string name="location_denied_message">As location permission has not been granted, this app cannot scan for Bluetooth LE devices.</string>
+    <string name="your_result_is">your result is positive, indicating you have developed IgG antibodies against SARS-CoV-2 Please re-test urinary every month to track your immunity(IgG)</string>
+    <string name="lessthan9"><![CDATA[<0.9]]></string>
+    <string name="collect">Collect test sample with text strip. Never let the liquid level exceed the block line</string>
+    <string name="waiting_for">Waiting for results to be observed with a clear band on control line with or with out test line. (5–15 minutes)</string>
+
+</resources>

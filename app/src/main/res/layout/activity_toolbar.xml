@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:background="@color/colorapp"
+    android:layout_height="60dp"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="20dp"
+            android:id="@+id/toolbar_icon"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_centerVertical="true"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/toolbar_text"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/text"
+        android:textSize="25sp"
+        android:layout_marginLeft="90dp"
+        android:textColor="@android:color/white"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+            android:layout_width="22dp"
+            android:id="@+id/img_add"
+           android:visibility="invisible"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+            android:layout_height="22dp" />
+        <ImageView
+            android:layout_width="22dp"
+            android:id="@+id/img_refresh"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_height="22dp" />
+     <ImageView
+        android:layout_width="40dp"
+        android:id="@+id/add_img"
+         android:layout_centerVertical="true"
+         android:layout_height="40dp" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_marginRight="30dp"
+        android:layout_height="40dp" />
+    </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>

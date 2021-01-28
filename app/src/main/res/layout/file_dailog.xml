@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_corner"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:padding="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Choose "
+                android:id="@+id/title"
+                android:textColor="@color/colorLightGray"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E5E5E5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/renamefile"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/first"
+                android:text="Rename File"
+                android:gravity="center"
+                android:textColor="@color/colorNewBlue"
+                android:padding="10dp"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E5E5E5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/showresult"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Result"
+                android:padding="10dp"
+                android:id="@+id/second"
+                android:textColor="@color/colorNewBlue"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>
+        <View
+            android:id="@+id/line4"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E5E5E5" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/thirdlayout"
+            android:visibility="gone"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/third"
+                android:textColor="@color/colorNewBlue"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E5E5E5" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_corner"
+        android:clickable="true"
+        android:id="@+id/layout_dismiss"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/colorNewBlue"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

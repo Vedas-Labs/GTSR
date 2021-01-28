@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/home_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/activity_hometoolbar" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:visibility="gone"
+            android:layout_margin="20dp"/>
+        <TextView
+            android:id="@+id/txt_test_results"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text=""
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+
+
+        <RelativeLayout
+            android:id="@+id/relativedelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="25dp"
+            android:splitMotionEvents="false"
+            android:windowEnableSplitTouch="false">
+
+            <ImageView
+                android:id="@+id/btn_delete"
+                android:layout_width="18dp"
+                android:layout_height="22dp"
+                android:clickable="false"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                />
+
+            <ImageView
+                android:id="@+id/btn_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/share"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/btn_print"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:layout_toLeftOf="@id/relativedelete"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/print" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+           >
+
+            <RelativeLayout
+                android:id="@+id/layout_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+               >
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    android:singleLine="true"
+                    android:text="Name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/txt_clientid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:text="Patient ID:"
+                    android:singleLine="true"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/clientid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:layout_toRightOf="@id/txt_clientid"
+                    android:text=" 00012"
+                    android:singleLine="true"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/txt_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/clientid"
+                    android:text="jacob@gmail.com"
+                    android:singleLine="true"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+               >
+                <TextView
+                    android:id="@+id/txt_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="Age"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/userage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="55"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+               >
+
+                <TextView
+                    android:id="@+id/usergender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="80dp"
+                    android:layout_alignParentRight="true"
+                    android:text="Male"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <!-- <ImageView
+             android:id="@+id/btn_delete"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="20dp"
+             android:background="@drawable/ic_delete" />-->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dates"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/rl_details"
+        android:background="#6ebaf2">
+        <TextView
+            android:id="@+id/text_currentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="Test Date &amp; Time"
+            android:textColor="@color/colorWhite"
+            android:textSize="13dp" />
+        <EditText
+            android:id="@+id/text_editname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:hint="UserName"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/txt_currentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="31 Feb 2020 15:00 PM"
+            android:textColor="@color/colorWhite"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/clientid1"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <!--<RelativeLayout
+        android:id="@+id/months"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/dates"
+        android:background="#46D1CE">
+
+        <com.wave.spectrocare.FONTS.TextViewFontStyle
+            android:id="@+id/txt_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:textSize="18dp" />
+
+        <com.wave.spectrocare.FONTS.ButtonFontStyle
+            android:id="@+id/calender"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/ic_calender_white" />
+    </RelativeLayout>-->
+
+    <RelativeLayout
+        android:id="@+id/rl_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dates">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/result_recycler"
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent"
+            android:isScrollContainer="false"
+            android:nestedScrollingEnabled="false">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dates"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txt_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="No Data Avaliable"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+</RelativeLayout>

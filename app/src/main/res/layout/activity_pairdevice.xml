@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relativeScanning"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="13dp">
+
+           <RelativeLayout
+               android:layout_width="60dp"
+               android:id="@+id/home"
+               android:layout_height="match_parent">
+               <Button
+                   android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   android:layout_centerVertical="true"
+                   android:layout_centerHorizontal="true"
+                   android:background="@drawable/back" />
+
+           </RelativeLayout>
+            <TextView
+                android:id="@+id/tool_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Pair The Device"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp">
+
+            <TextView
+                android:id="@+id/pleaseconnect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="Looking for  GTSR devices"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.skyfishjy.library.RippleBackground xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:rb_color="@color/colorWhite"
+                app:rb_duration="3000"
+                app:rb_radius="32dp"
+                app:rb_rippleAmount="4"
+                app:rb_scale="6">
+
+                <ImageView
+                    android:id="@+id/centerImage"
+                    android:layout_width="50dp"
+                    android:layout_height="90dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_phone"
+                    android:visibility="gone" />
+
+            </com.skyfishjy.library.RippleBackground>
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/relativeConnect"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/relativetoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/my_gradient">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp">
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:id="@+id/home1"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/back" />
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tool_txt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="Pair The Device"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp" />
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:id="@+id/refresh"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/refresh"
+                        android:layout_centerVertical="true" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="80dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="100dp"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_height="100dp">
+
+            <Button
+                android:id="@+id/btn_striptray"
+                android:layout_width="160dp"
+                android:layout_height="45dp"
+                android:textAllCaps="false"
+                android:background="@drawable/btn_gradient"
+                android:text="Return Strip Tray"
+                android:textColor="@color/colorWhite"
+                />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="160dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/btn_gradient"
+                android:text="Test Now"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

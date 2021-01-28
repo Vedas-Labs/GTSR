@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/my_gradient">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/toolbar_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/toolbar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="90dp"
+
+                android:textColor="@android:color/white"
+                android:textSize="22sp" />
+
+
+            <ImageView
+                android:id="@+id/img_graph"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+
+                android:layout_marginRight="55dp" />
+
+            <ImageView
+                android:id="@+id/img_shop"
+                android:layout_width="20dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp" />
+
+            <RelativeLayout
+                android:id="@+id/relativeshare"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:splitMotionEvents="false"
+                android:windowEnableSplitTouch="false">
+
+                <ImageView
+                    android:id="@+id/img_share"
+                    android:layout_width="22dp"
+                    android:layout_height="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp" />
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:id="@+id/img_doctor"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="55dp" />
+
+            <ImageView
+                android:id="@+id/add_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="30dp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>

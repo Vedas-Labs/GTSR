@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+       >
+<!--
+        <CheckBox
+            android:id="@+id/result_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:button="@drawable/recycler_checkbox"
+            />
+-->
+        <ImageView
+            android:id="@+id/img_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ellipse"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urine Analysis"
+            android:id="@+id/txtname"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/img_check"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sep 25,2020"
+            android:id="@+id/txtdate"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img_check"
+            />
+
+
+    </RelativeLayout>
+</RelativeLayout>

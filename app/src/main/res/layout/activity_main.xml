@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/my_gradient">
+
+        <TextView
+            android:id="@+id/toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:text="@string/gtsr"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/img_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="20dp"
+            android:src="@drawable/chart" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/btn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:weightSum="2"
+        android:layout_below="@id/layout_toolbar"
+        >
+        <Button
+            android:id="@+id/btn_urine_test"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="urine routine test"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:background="@drawable/btn_color_background"
+            />
+        <Button
+            android:id="@+id/btn_body_test"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Anti body test"
+            android:textSize="12sp"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:background="@drawable/btn_boarder"
+            android:layout_margin="5dp"
+            />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="200dp"
+        android:layout_below="@id/btn_layout"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/txt_recent_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/recent_results"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/result_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/txt_recent_result"
+            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+   <RelativeLayout
+       android:layout_width="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true"
+       android:id="@+id/img_test_now"
+       android:layout_height="150dp">
+       <ImageView
+           android:layout_width="120dp"
+           android:layout_height="120dp"
+           android:clickable="false"
+           android:focusable="false"
+           android:layout_centerHorizontal="true"
+           android:src="@drawable/testnow" />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentBottom="true"
+           android:layout_centerHorizontal="true"
+           android:clickable="false"
+           android:textColor="@color/colorLightGray"
+           android:text="App Version v1.23"
+           android:focusable="false"
+           android:layout_marginBottom="10dp"
+           android:src="@drawable/testnow" />
+   </RelativeLayout>
+</RelativeLayout>
