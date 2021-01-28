@@ -1,7 +1,9 @@
 package com.gtsr.gtsr.qubeTestResults;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.app.VoiceInteractor;
 import android.graphics.drawable.Drawable;
@@ -77,6 +79,9 @@ public class QubeTestResultActivity extends AppCompatActivity {
     @BindView(R.id.txt_round)
     TextView txt_round;
 
+    @BindView(R.id.img_indicator)
+    ImageView img_indicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +108,6 @@ public class QubeTestResultActivity extends AppCompatActivity {
         img_print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("size", " " + rl_pdf.getWidth() + "  " + rl_pdf.getWidth());
                 bitmap = loadBitmapFromView(rl_pdf, rl_pdf.getWidth(), rl_pdf.getHeight());
                 createPdf();
             }
@@ -138,11 +142,19 @@ public class QubeTestResultActivity extends AppCompatActivity {
         if (currentTestFactor != null) {
             txt_result.setText(currentTestFactor.getResult());
             txt_condition.setText(currentTestFactor.getHealthReferenceRanges());
-            txt_value.setText(currentTestFactor.getValue());
-            if(currentTestFactor.getResult().contains("Positive")){
-                txt_round.setBackgroundColor(R.color.colorGreen);
+            txt_value.setText(currentTestFactor.getValue()+" index");
+
+            if(currentTestFactor.getResult().equals("Positive")){
+                txt_round.setBackgroundTintList(getResources().getColorStateList(R.color.colorGreen));
+                img_indicator.setBackgroundResource(R.drawable.image_1);
+                txt_result.setTextColor(Color.parseColor("#77BD93"));
+                Log.e("result", "call " + currentTestFactor.getResult());
             }else{
-                txt_round.setBackgroundColor(R.color.colorOrange);
+                Log.e("adsf", "call " + currentTestFactor.getResult());
+                txt_round.setBackgroundTintList(getResources().getColorStateList(R.color.colorOrange));
+
+                txt_result.setTextColor(Color.parseColor("#EA9834"));
+                img_indicator.setImageResource(R.drawable.image_2);
             }
             if (QubeController.getInstance().qubeResultList.size() > 0) {
                 for (int i = 0; i < QubeController.getInstance().qubeResultList.size(); i++) {

@@ -41,11 +41,21 @@ public class UrineTestDataCreatorController {
 
     public ArrayList<UrineresultsModel> getFilterArrayForDateString(String date) throws ParseException {
         ArrayList<UrineresultsModel> filterDateList = new ArrayList<>();
-        for (int i = 0; i < UrineResultsDataController.getInstance().allUrineResults.size(); i++) {
+        if (UrineResultsDataController.getInstance().allUrineResults.size() > 0) {
+            for (int i = 0; i < UrineResultsDataController.getInstance().allUrineResults.size(); i++) {
+                UrineresultsModel urineresultsModel = UrineResultsDataController.getInstance().allUrineResults.get(i);
+                if (urineresultsModel.getTestType().contains(Constants.TestNames.urine.toString())) {
+                    filterDateList.add(urineresultsModel);
+                }
+            }
+            Log.e("urinetemparray","call"+filterDateList.size());
+
+        }
+        /*for (int i = 0; i < UrineResultsDataController.getInstance().allUrineResults.size(); i++) {
             UrineresultsModel urineTestModel = UrineResultsDataController.getInstance().allUrineResults.get(i);
             filterDateList.add(urineTestModel);
         }
-        Log.e("fitedr", "" + filterDateList.size());
+        Log.e("fitedr", "" + filterDateList.size());*/
 
         return filterDateList;
     }

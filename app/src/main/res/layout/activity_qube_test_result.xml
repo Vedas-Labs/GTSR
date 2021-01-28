@@ -155,35 +155,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="5dp"
+                        android:layout_marginTop="15dp"
                         android:layout_below="@id/txt_title"
                         android:weightSum="3"
                         >
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
                             android:orientation="horizontal"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="5dp"
                             >
                             <TextView
                                 android:id="@+id/txt_round"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
+                                android:layout_marginBottom="3dp"
                                 android:backgroundTint="@color/colorGreen"
                                 android:background="@drawable/btn_gradient"
                                 />
+
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Positive"
                                 android:id="@+id/txt_result"
-                                android:textColor="@color/colorGreen"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_marginLeft="10dp"
-                                android:textSize="13sp"
                                 android:fontFamily="@font/montserrat"
-                                />
+                                android:text="Positive"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorGreen"
+                                android:textSize="15sp" />
 
                         </LinearLayout>
                         <TextView
@@ -427,7 +429,7 @@
                             android:id="@+id/txt_pale"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
-                            android:backgroundTint="@color/colorGreen"
+                            android:backgroundTint="@color/colorOrange"
                             android:background="@drawable/btn_gradient"
                             />
                         <TextView

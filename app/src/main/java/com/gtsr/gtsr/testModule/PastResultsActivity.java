@@ -163,14 +163,26 @@ public class PastResultsActivity extends AppCompatActivity {
 
     Date dateForLand;
     Calendar calender;
+    public ArrayList<UrineresultsModel> tempUrineResults = new ArrayList<>();
 
     public void loadLatestRecord() {
         UrineResultsDataController.getInstance().fetchAllUrineResults();
+        tempUrineResults.clear();
+        if (UrineResultsDataController.getInstance().allUrineResults.size() > 0) {
+            for (int i = 0; i < UrineResultsDataController.getInstance().allUrineResults.size(); i++) {
+                UrineresultsModel urineresultsModel = UrineResultsDataController.getInstance().allUrineResults.get(i);
+                if (urineresultsModel.getTestType().contains(Constants.TestNames.urine.toString())) {
+                    tempUrineResults.add(urineresultsModel);
+                }
+            }
+            Log.e("urinetemparray","call"+tempUrineResults.size());
+
+        }
         TestFactorDataController.getInstance().fetchTestFactorresults(UrineResultsDataController.getInstance().currenturineresultsModel);
-        for (int i = 0; i < UrineResultsDataController.getInstance().allUrineResults.size(); i++) {
+        for (int i = 0; i < tempUrineResults.size(); i++) {
             Log.e("humanurinesize", "" + i);
-            if (UrineResultsDataController.getInstance().allUrineResults.size() > 0) {
-                UrineresultsModel selectedObjects1 = UrineResultsDataController.getInstance().allUrineResults.get(i);
+            if (tempUrineResults.size() > 0) {
+                UrineresultsModel selectedObjects1 =tempUrineResults.get(i);
                 String objTimeStamp1 = selectedObjects1.getTestedTime();
                 long yourmilliseconds1 = Long.parseLong(objTimeStamp1);
                 calender = Calendar.getInstance();
@@ -744,7 +756,6 @@ public class PastResultsActivity extends AppCompatActivity {
                         TabsGraphActivity.isDayToggleChecked = false;
                         Log.e("togglelistelse", "call" + togglebutton.isChecked() + "" + TabsGraphActivity.isDayToggleChecked);
                         txt_unit.setText(getUnitValueForTestName(testType_txt.getText().toString()));
-
                     }*/
                 }
 
