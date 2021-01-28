@@ -427,7 +427,7 @@
                             android:id="@+id/txt_pale"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
-                            android:backgroundTint="@color/colorOrange"
+                            android:backgroundTint="@color/colorGreen"
                             android:background="@drawable/btn_gradient"
                             />
                         <TextView
