@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gtsr.gtsr.adapter.AntiBodyTestAdapter;
 import com.gtsr.gtsr.dataController.LanguageTextController;
+import com.gtsr.gtsr.dataController.QubeController;
 import com.gtsr.gtsr.dataController.UrineTestDataCreatorController;
 import com.gtsr.gtsr.database.TestFactorDataController;
 import com.gtsr.gtsr.database.TestFactors;
@@ -71,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
     Button btnUrineTest, btnBodyTest;
     public static boolean isFromHome = false;
     boolean isRefresh = false;
+    public ArrayList<UrineresultsModel> tempUrineResults = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         LanguageTextController.getInstance().fillCOntext(MyApplication.getAppContext());
         LanguageTextController.getInstance().loadLanguageTexts();
+        QubeController.getInstance().fillCOntext(getApplicationContext());
         UrineTestDataCreatorController.getInstance();
         inti();
     }
@@ -198,13 +201,13 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ResultHolder holder, int position) {
-            UrineresultsModel objTestFactors = UrineResultsDataController.getInstance().allUrineResults.get(position);
+            UrineresultsModel objTestFactors = tempUrineResults.get(position);
             holder.txtDate.setText(convertTimestampTodate(objTestFactors.getTestedTime()));
             holder.txtName.setText(objTestFactors.getUserName());
             if (itemPosition == position) {
                 holder.imgRound.setImageResource(R.drawable.check);
                 HomeActivity.isFromHome = true;
-                UrineResultsDataController.getInstance().currenturineresultsModel = UrineResultsDataController.getInstance().allUrineResults.get(itemPosition);
+                UrineResultsDataController.getInstance().currenturineresultsModel = tempUrineResults.get(itemPosition);
                 if (!isRefresh) {
                     selectionBottomSheet();
                 } else {
@@ -229,8 +232,9 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            if (UrineResultsDataController.getInstance().allUrineResults.size() > 0) {
-                return UrineResultsDataController.getInstance().allUrineResults.size();
+            loadResultData();
+            if (tempUrineResults.size() > 0) {
+                return tempUrineResults.size();
             } else {
                 return 0;
             }
@@ -337,7 +341,19 @@ public class HomeActivity extends AppCompatActivity {
         });
         builder.show();
     }
+    private void loadResultData() {
+        tempUrineResults.clear();
+        if (UrineResultsDataController.getInstance().allUrineResults.size() > 0) {
+            for (int i = 0; i < UrineResultsDataController.getInstance().allUrineResults.size(); i++) {
+                UrineresultsModel urineresultsModel = UrineResultsDataController.getInstance().allUrineResults.get(i);
+                if (urineresultsModel.getTestType().contains(Constants.TestNames.urine.toString())) {
+                    tempUrineResults.add(urineresultsModel);
+                }
+            }
+            Log.e("urinetemparray","call"+tempUrineResults.size());
 
+        }
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -178,6 +178,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Positive"
+                                android:id="@+id/txt_result"
                                 android:textColor="@color/colorGreen"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="13sp"
@@ -190,6 +191,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="High"
+                            android:id="@+id/txt_condition"
                             android:layout_margin="5dp"
                             android:gravity="center"
                             android:textColor="@color/colorBlack"
@@ -201,6 +203,7 @@
                             android:layout_weight="1"
                             android:text="15.3 Index"
                             android:gravity="center"
+                            android:id="@+id/txt_value"
                             android:textColor="@color/colorBlack"
                             android:layout_margin="5dp"
                             android:fontFamily="@font/montserrat"
@@ -235,7 +238,7 @@
                         android:textSize="14sp"
                         android:layout_margin="5dp"
                         android:textColor="@color/colorBlack"
-                        android:text="@string/your_result_is"
+                        android:id="@+id/txt_resultMsg"
                         android:layout_toRightOf="@id/img_bulb"
                         />
                 </RelativeLayout>

@@ -219,12 +219,13 @@ public class Constants {
             return this.name;
         }
     }
-    public enum UrineAndBloodNames {
+    public enum TestNames {
         urine("Urine"),
+        qube("QUBE"),
         blood("Blood");
 
         private final String name;
-        private UrineAndBloodNames(String s) {
+        private TestNames(String s) {
             name = s;
         }
         public boolean equalsName(String otherName) {

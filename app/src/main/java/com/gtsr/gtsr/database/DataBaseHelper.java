@@ -45,7 +45,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    @Override
+   @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         Log.e("oldVersion", "OnCreate" + oldVersion);
         Log.e("newVersion", "OnCreate" + newVersion);
@@ -57,15 +57,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
                 Toast.makeText(LanguageTextController.getInstance().context.getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
-           /* try {
-                Dao dao = getUrineresultsDao();
-               // dao.executeRaw("ALTER TABLE `UrineresultsModel` ADD COLUMN userName STRING;");
-                db.execSQL("DROP TABLE IF EXISTS `UrineresultsModel`");
-                onCreate(db);
-               // dao.executeRaw("ALTER TABLE `Card` ADD COLUMN validFrom STRING;");
-            } catch (SQLException e) {
-                Toast.makeText(LanguageTextController.getInstance().context.getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
-            }*/
+
     }
 
     /*@Override

@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gtsr.gtsr.AlertShowingDialog;
+import com.gtsr.gtsr.Constants;
 import com.gtsr.gtsr.HomeActivity;
 import com.gtsr.gtsr.LanguagesKeys;
 import com.gtsr.gtsr.R;
@@ -424,12 +425,12 @@ public class AnalizingPageViewController extends AppCompatActivity {
     public void loadResultsDataTODb(ArrayList<TestFactors> testResults) {
         UrineresultsModel objResult = new UrineresultsModel();
         objResult.setTestReportNumber("1");
-        objResult.setTestType("Urine");
+        objResult.setTestType(Constants.TestNames.urine.toString());
         objResult.setLatitude("0.0");
         objResult.setLongitude("0.0");
         objResult.setTestedTime(currentTime);
         objResult.setIsFasting("false");
-        objResult.setRelationtype("Urine");
+        objResult.setRelationtype(Constants.TestNames.urine.toString());
         objResult.setTest_id(testID);
         objResult.setUserName(username + " Urine Analysis");
 

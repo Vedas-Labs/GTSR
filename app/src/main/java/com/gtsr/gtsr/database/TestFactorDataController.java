@@ -4,6 +4,8 @@ import com.gtsr.gtsr.dataController.LanguageTextController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import android.util.Log;
+
 
 
 public class TestFactorDataController {
@@ -22,7 +24,8 @@ public class TestFactorDataController {
     public boolean insertTestFactorResults(TestFactors testFactors) {
         try {
             LanguageTextController.getInstance().helper.getTestFactorsesDao().create(testFactors);
-            fetchTestFactorresults(UrineResultsDataController.getInstance().currenturineresultsModel);
+            ArrayList<TestFactors> test= fetchTestFactorresults(UrineResultsDataController.getInstance().currenturineresultsModel);
+          Log.e("zxcvvvvv","call"+test.size());
             return  true;
         } catch (SQLException e) {
             e.printStackTrace();
