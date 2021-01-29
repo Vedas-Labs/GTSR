@@ -568,7 +568,6 @@ public class PastResultsActivity extends AppCompatActivity {
                 UrineresultsModel objSelectRecord = resultsDayArray.get(selectedIndex);
                 loadTableDataForSelectedObject(objSelectRecord);
             }
-
             @Override
             public void onNothingSelected() {
 

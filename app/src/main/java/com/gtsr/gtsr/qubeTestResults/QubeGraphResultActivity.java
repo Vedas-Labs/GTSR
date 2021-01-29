@@ -22,7 +22,7 @@ public class QubeGraphResultActivity extends AppCompatActivity {
         loadActions();
     }
     private void loadActions(){
-        toggleBtn = findViewById(R.id.toggle_btn);
+       /* toggleBtn = findViewById(R.id.toggle_btn);
         toggleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +34,6 @@ public class QubeGraphResultActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
     }
 }

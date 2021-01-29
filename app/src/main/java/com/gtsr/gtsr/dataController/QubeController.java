@@ -2,8 +2,13 @@ package com.gtsr.gtsr.dataController;
 
 import android.content.Context;
 import android.util.Log;
+import java.text.ParseException;
 
+import com.gtsr.gtsr.Constants;
+import com.gtsr.gtsr.database.UrineResultsDataController;
+import com.gtsr.gtsr.database.UrineresultsModel;
 import com.gtsr.gtsr.model.QubeResultModel;
+import com.gtsr.gtsr.model.UrineTestObject;
 
 import java.util.ArrayList;
 
@@ -47,5 +52,19 @@ public class QubeController {
         qubeResultList.add(qubeTwo);
         qubeResultList.add(qube3);
 
+    }
+    public ArrayList<UrineresultsModel> getFilterArrayForDateString(String date) throws ParseException {
+        ArrayList<UrineresultsModel> filterDateList = new ArrayList<>();
+        if (UrineResultsDataController.getInstance().allUrineResults.size() > 0) {
+            for (int i = 0; i < UrineResultsDataController.getInstance().allUrineResults.size(); i++) {
+                UrineresultsModel urineresultsModel = UrineResultsDataController.getInstance().allUrineResults.get(i);
+                if (urineresultsModel.getTestType().contains(Constants.TestNames.qube.toString())) {
+                    filterDateList.add(urineresultsModel);
+                }
+            }
+            Log.e("qubetemparray","call"+filterDateList.size());
+
+        }
+        return filterDateList;
     }
 }

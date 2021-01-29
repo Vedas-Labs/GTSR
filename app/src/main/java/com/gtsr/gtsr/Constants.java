@@ -222,6 +222,7 @@ public class Constants {
     public enum TestNames {
         urine("Urine"),
         qube("QUBE"),
+        sars("SARS-COV-2 ANTIBODY"),
         blood("Blood");
 
         private final String name;

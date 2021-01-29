@@ -165,7 +165,6 @@ public class QubeTestResultActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
     public Bitmap bitmapGetBitmapFromView(RelativeLayout view) {
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
@@ -291,14 +290,12 @@ public class QubeTestResultActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
         } else {
 
         }
     }
-
     /* private void openGeneratedPDF(){
         File file = new File("/sdcard/pdffromlayout.pdf");
         if (file.exists())

@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="70dp"
-                    android:text="Test Results"
+                    android:text="AntiBody Test Results"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/colorWhite"

@@ -45,6 +45,7 @@ import com.gtsr.gtsr.database.TestFactors;
 import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.database.UrineresultsModel;
 import com.gtsr.gtsr.loginModule.LoginActivity;
+import com.gtsr.gtsr.qubeTestResults.QUBEPastResultsActivity;
 import com.gtsr.gtsr.qubeTestResults.QubeGraphResultActivity;
 import com.gtsr.gtsr.testModule.MyApplication;
 import com.gtsr.gtsr.testModule.PairDeviceViewController;
@@ -108,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    startActivity(new Intent(HomeActivity.this, QubeGraphResultActivity.class));
+                    startActivity(new Intent(HomeActivity.this, QUBEPastResultsActivity.class));
                 }
             }
         });
@@ -194,11 +195,9 @@ public class HomeActivity extends AppCompatActivity {
         @NonNull
         @Override
         public ResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View resultView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_result_item, parent,
-                    false);
+            View resultView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_result_item, parent, false);
             return new ResultHolder(resultView);
         }
-
         @Override
         public void onBindViewHolder(@NonNull ResultHolder holder, int position) {
             UrineresultsModel objTestFactors = tempUrineResults.get(position);
