@@ -102,7 +102,7 @@ public class QUBEPastResultsActivity extends AppCompatActivity {
     TextView txt_CircleColor;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qube_graph_result);
          ButterKnife.bind(this);
@@ -229,8 +229,8 @@ public class QUBEPastResultsActivity extends AppCompatActivity {
     }
 
     public void setBarGroupChartData(ArrayList<Double> values) {
-      //  final RangeLimit objRangeLimit = UrineTestDataCreatorController.getInstance().getRangeAndLimitLineValuesForTestItem(testTypeArray.get(selectedTestTypeRecordIndex));
-      //  int seperateCount = UrineTestDataCreatorController.getInstance().getCountForMoreThanZero(objRangeLimit.getcArray());
+        final RangeLimit objRangeLimit = QubeController.getInstance().getRangeAndLimitLineValuesForTestItem(testTypeArray.get(selectedTestTypeRecordIndex));
+        int seperateCount = UrineTestDataCreatorController.getInstance().getCountForMoreThanZero(objRangeLimit.getcArray());
         mChart.getAxisLeft().setAxisMinimum(0);
         mChart.getAxisLeft().setAxisMaximum(300);
         final double rangeValue = 300.0 / (double) 10;
@@ -337,6 +337,73 @@ public class QUBEPastResultsActivity extends AppCompatActivity {
         mChart.setScaleXEnabled(true);
         mChart.setScaleYEnabled(false);
 
+        //safe line
+        float lineValue = 0.0f;
+        double  normal = Double.parseDouble(objRangeLimit.getcArray().get(0));
+
+        if (normal > 0) {
+            lineValue = (float) (lineValue + rangeValue);
+            LimitLine safelimitLine = new LimitLine(lineValue, "");
+            safelimitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+            safelimitLine.setLineWidth(3);
+            safelimitLine.setLineColor(Color.parseColor("#274e13"));
+            safelimitLine.setTextColor(Color.argb((int) 1.0, (int) 0.15, (int) 0.31, (int) 0.07));
+            mChart.getAxisLeft().addLimitLine(safelimitLine);
+        }
+        double plusOrMinus = Double.parseDouble(objRangeLimit.getcArray().get(1));;
+
+        if (plusOrMinus > 0) {
+            lineValue = (float) (lineValue + rangeValue);
+            LimitLine limitLine = new LimitLine(lineValue, " ");
+            limitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+            limitLine.setLineColor(Color.YELLOW);
+            limitLine.setTextColor(Color.YELLOW);
+            limitLine.setLineWidth(3);
+            mChart.getAxisLeft().addLimitLine(limitLine);
+        }
+        double plus = Double.parseDouble(objRangeLimit.getcArray().get(2));
+        if (plus > 0) {
+            lineValue = (float) (lineValue + rangeValue);
+            LimitLine limitplus = new LimitLine(lineValue, " ");
+            limitplus.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+            limitplus.setLineColor(Color.parseColor("#3D85C7"));
+            limitplus.setTextColor(Color.parseColor("#3D85C7"));
+            limitplus.setLineWidth(3);
+            mChart.getAxisLeft().addLimitLine(limitplus);
+        }
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // this code will be executed after 2 seconds
+                hideAllIndicationViews();
+                float lineValue = 0.0f;
+                double normal = Double.parseDouble(objRangeLimit.getcArray().get(0));
+                if (normal > 0) {
+                    lineValue = (float) (lineValue + rangeValue);
+                    BarEntry limiteLineEntry = new BarEntry((float) 0, lineValue);
+                    MPPointF axisPos = mChart.getPosition(limiteLineEntry, mChart.getAxisLeft().getAxisDependency());
+                    setLabel(negativeview, axisPos, negativeText, objRangeLimit.getLimitLineTextArray().get(0));
+                }
+                double plusOrMinus = Double.parseDouble(objRangeLimit.getcArray().get(1));
+                if (plusOrMinus > 0) {
+                    lineValue = (float) (lineValue + rangeValue);
+                    BarEntry limiteLineEntry = new BarEntry((float) 0, lineValue);
+                    MPPointF axisPos = mChart.getPosition(limiteLineEntry, mChart.getAxisLeft().getAxisDependency());
+                    //set layout  params
+                    setLabel(plusMinusView, axisPos, plusMinusText, objRangeLimit.getLimitLineTextArray().get(1));
+                }
+                double plus = Double.parseDouble(objRangeLimit.getcArray().get(2));
+                if (plus > 0) {
+                    lineValue = (float) (lineValue + rangeValue);
+                    BarEntry limiteLineEntry = new BarEntry((float) 0, lineValue);
+                    MPPointF axisPos = mChart.getPosition(limiteLineEntry, mChart.getAxisLeft().getAxisDependency());
+                    setLabel(plusView, axisPos, plusText, objRangeLimit.getLimitLineTextArray().get(2));
+                }
+
+            }
+        }, 1000);
         loadListData();
 
     }

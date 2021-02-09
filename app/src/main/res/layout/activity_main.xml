@@ -115,7 +115,7 @@
            android:layout_centerHorizontal="true"
            android:clickable="false"
            android:textColor="@color/colorLightGray"
-           android:text="App Version v1.23"
+           android:text="App Version v1.0"
            android:focusable="false"
            android:layout_marginBottom="10dp"
            android:src="@drawable/testnow" />

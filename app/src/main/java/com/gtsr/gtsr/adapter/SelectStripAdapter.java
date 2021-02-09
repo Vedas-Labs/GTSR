@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gtsr.gtsr.R;
 import com.gtsr.gtsr.testModule.SelectTestStripActivity;
@@ -30,7 +31,7 @@ public class SelectStripAdapter extends RecyclerView.Adapter<SelectStripAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull StripHolder holder, int position) {
-
+       holder.testName.setText("CUBE_Covid19 Test strip");
         if (SelectTestStripActivity.selectedPosition == position) {
             Log.e("if", "" + position);
             holder.image.setVisibility(View.VISIBLE);
@@ -61,9 +62,12 @@ public class SelectStripAdapter extends RecyclerView.Adapter<SelectStripAdapter.
 
     public class StripHolder extends RecyclerView.ViewHolder {
         ImageView image;
+        TextView testName;
         public StripHolder(@NonNull View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
+            testName = (TextView) itemView.findViewById(R.id.testName);
+
 
         }
     }

@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -43,6 +44,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.gtsr.gtsr.AlertShowingDialog;
 import com.gtsr.gtsr.HomeActivity;
 import com.gtsr.gtsr.LanguagesKeys;
@@ -56,6 +60,10 @@ import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCFileHelper;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -139,6 +147,26 @@ public class ResultPageViewController extends AppCompatActivity {
         loadCurrentDate();
         if (UrineResultsDataController.getInstance().currenturineresultsModel != null) {
             testFactorsArrayList = TestFactorDataController.getInstance().fetchTestFactorresults(UrineResultsDataController.getInstance().currenturineresultsModel);
+            /*JSONArray jsonArray = new JSONArray();
+            for (int i=0; i < testFactorsArrayList.size(); i++) {
+                TestFactors testFactors=testFactorsArrayList.get(i);
+                JSONObject obj=new JSONObject();
+                try {
+                    obj.put("name",testFactors.getTestName());
+                    obj.put("unit",testFactors.getUnit());
+                    obj.put("value",testFactors.getValue());
+                    obj.put("result",testFactors.getResult());
+                    obj.put("referenceRange",testFactors.getHealthReferenceRanges());
+                    obj.put("flag",testFactors.getFlag());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JsonParser jsonParser = new JsonParser();
+                JsonObject gsonObject = (JsonObject) jsonParser.parse(obj.toString());
+                Log.e("ServiceResponse", "onResponse: " + gsonObject.toString());
+                jsonArray.put(obj);
+            }
+            Log.e("allresultsfor","call"+ jsonArray.toString());*/
         }
         activateNotifications();
     }
@@ -156,7 +184,6 @@ public class ResultPageViewController extends AppCompatActivity {
     }
 
     public void setResultRecyclerViewData() {
-
         resultRecyclerView = (RecyclerView) findViewById(R.id.result_recycler);
         resultRecyclerView.setNestedScrollingEnabled(false);
         resultsTableViewCell = new ResultsTableViewCell();

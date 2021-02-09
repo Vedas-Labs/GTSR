@@ -31,7 +31,19 @@
                 android:layout_centerVertical="true"
                 android:text="Select Test Strip"
                 android:textStyle="bold"
-                android:layout_marginRight="40dp"
+                android:singleLine="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tool_txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="Calibration"
+                android:layout_marginRight="20dp"
+                android:textStyle="bold"
                 android:singleLine="false"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import android.util.Log;
 
 import com.gtsr.gtsr.Constants;
+import com.gtsr.gtsr.QUBETestingController;
 import com.gtsr.gtsr.R;
 import com.gtsr.gtsr.RefreshShowingDialog;
 import com.gtsr.gtsr.dataController.QubeController;
@@ -18,7 +19,11 @@ import com.gtsr.gtsr.database.TestFactorDataController;
 import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.database.UrineresultsModel;
 import com.gtsr.gtsr.testModule.AnalizingPageViewController;
+import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
 import com.spectrochips.spectrumsdk.FRAMEWORK.TestFactors;
+import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
+
+import java.util.ArrayList;
 
 public class QubeSampleReadyActivity extends AppCompatActivity {
 Button btnNext;
@@ -30,23 +35,15 @@ Button btnNext;
         setContentView(R.layout.activity_qube_sample_ready);
         btnNext = findViewById(R.id.btn_start);
         refreshShowingDialog = new RefreshShowingDialog(QubeSampleReadyActivity.this, "testing..");
-
-        btnNext.setVisibility(View.GONE);
+        loadInterfaces();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QubeSampleReadyActivity.this,QubeTestResultActivity.class));
+                refreshShowingDialog.showAlert();
+                QUBETestingController.getInstance().startTesting();
+              //  startActivity(new Intent(QubeSampleReadyActivity.this,QubeTestResultActivity.class));
             }
         });
-         refreshShowingDialog.showAlert();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.e("starting", "startLogin1");
-                loadQubeResultsDataTODb();
-
-            }
-        }, 1000);
     }
     String currentTime = String.valueOf(System.currentTimeMillis() / 1000L);
     String testID = "test" + String.valueOf(getRandomInteger(1000, 10));
@@ -54,6 +51,46 @@ Button btnNext;
     public int getRandomInteger(int maximum, int minimum) {
         return ((int) (Math.random() * (maximum - minimum))) + minimum;
     }
+    private void loadInterfaces(){
+        QUBETestingController.getInstance().activatenotifications(new QUBETestingController.QUBETestDataInterface() {
+            @Override
+            public void gettingData(byte[] var1) {
+
+            }
+
+            @Override
+            public void onSuccessForTestComplete(ArrayList<TestFactors> var1, String var2, ArrayList<IntensityChart> var3) {
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       refreshShowingDialog.hideRefreshDialog();
+                       Toast.makeText(getApplicationContext(),var2,Toast.LENGTH_SHORT).show();
+                   }
+               });
+            }
+            @Override
+            public void getRequestAndResponse(String var1) {
+
+            }
+
+            @Override
+            public void onFailureForTesting(String var1) {
+
+            }
+
+            @Override
+            public void isSyncingCompleted(boolean val, ArrayList<Float> standardWhiteIntensityArray) {
+
+            }
+
+            @Override
+            public void gettingDarkSpectrum(boolean val, ArrayList<Float> standardWhiteIntensityArray) {
+
+            }
+        });
+
+    }
+
 
     public void loadQubeResultsDataTODb() {
         UrineresultsModel objResult = new UrineresultsModel();
@@ -95,7 +132,6 @@ Button btnNext;
             if (TestFactorDataController.getInstance().insertTestFactorResults(objTest)) {
                 refreshShowingDialog.hideRefreshDialog();
             }
-            btnNext.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Testing Completed", Toast.LENGTH_SHORT).show();
         }
     }

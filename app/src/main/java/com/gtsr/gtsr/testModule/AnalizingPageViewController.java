@@ -48,6 +48,7 @@ import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
 import com.spectrochips.spectrumsdk.FRAMEWORK.TestFactors;
 import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.text.DecimalFormat;
