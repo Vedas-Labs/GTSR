@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gtsr.gtsr.AlertShowingDialog;
+import com.gtsr.gtsr.HomeActivity;
 import com.gtsr.gtsr.LanguagesKeys;
 import com.gtsr.gtsr.QUBETestingController;
 import com.gtsr.gtsr.R;
@@ -60,6 +61,7 @@ public class SelectTestStripActivity extends AppCompatActivity {
         syncingDialog = new RefreshShowingDialog(SelectTestStripActivity.this, "Configure Settings..");
         syncingDialog1 = new RefreshShowingDialog(SelectTestStripActivity.this, "Configuring..");
 
+         selectedPosition=-1;
         SpectroDeviceDataController.getInstance().fillContext(getApplicationContext());
         SCTestAnalysis.getInstance().startTestProcess();
         SCTestAnalysis.getInstance().initializeService();
@@ -113,7 +115,7 @@ public class SelectTestStripActivity extends AppCompatActivity {
     }
 
     private void loadDummyCommands() {
-        SCTestAnalysis.getInstance().isTestingCal = true;
+       /* SCTestAnalysis.getInstance().isTestingCal = true;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -121,7 +123,7 @@ public class SelectTestStripActivity extends AppCompatActivity {
                     SCTestAnalysis.getInstance().sendString("$SUV0#");
                 }
             }
-        }, 2000 * 1);
+        }, 2000 * 1);*/
     }
 
     private void loadFileWithFileName(final String fileNmae, final String category, final String date) {
@@ -166,7 +168,7 @@ public class SelectTestStripActivity extends AppCompatActivity {
         }
     }
 
-   /* public void syncingSettings(final String fileNmae, final String category, final String date) {
+   /*public void syncingSettings(final String fileNmae, final String category, final String date) {
         if (SCTestAnalysis.getInstance().canDo()) {
             syncingDialog.showAlert();
             synSettingWithDevice(fileNmae);
@@ -200,7 +202,8 @@ public class SelectTestStripActivity extends AppCompatActivity {
                 saveArrayList(white, "WhiteArray");
                 Log.e("isSyncingCompleted", "call" + white.toString());
                   syncingDialog.hideRefreshDialog();
-                Intent intent = new Intent(getApplicationContext(), QubeSampleReadyActivity.class);
+                SCConnectionHelper.getInstance().disconnectWithPeripheral();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
             }
 

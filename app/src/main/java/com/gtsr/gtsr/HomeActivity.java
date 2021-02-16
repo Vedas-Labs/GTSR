@@ -13,6 +13,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.LocationManager;
@@ -20,6 +21,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.gtsr.gtsr.adapter.AntiBodyTestAdapter;
 import com.gtsr.gtsr.dataController.LanguageTextController;
 import com.gtsr.gtsr.dataController.QubeController;
@@ -57,6 +61,7 @@ import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,9 +77,11 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<TestFactors> testFactorsArrayList;
     Button btnUrineTest, btnBodyTest;
     public static boolean isFromHome = false;
+    public static boolean isClickCalibration = false;
     boolean isRefresh = false;
     public ArrayList<UrineresultsModel> tempUrineResults = new ArrayList<>();
-
+    ArrayList<Float> darkArray = new ArrayList<>();
+    ArrayList<Float> whiteArray = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +91,17 @@ public class HomeActivity extends AppCompatActivity {
         QubeController.getInstance().fillCOntext(getApplicationContext());
         UrineTestDataCreatorController.getInstance();
         inti();
+
+
+        ArrayList<Float> dark = getArrayList("DarkArray");
+        ArrayList<Float> white = getArrayList("WhiteArray");
+        if (dark != null && white != null) {
+            darkArray = dark;
+            whiteArray = white;
+            Log.e("getdark", "call" + dark.toString());
+            Log.e("getwhite", "call" + white.toString());
+        }
+
     }
 
     public void inti() {
@@ -118,7 +136,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isFromHome = false;
-                startActivity(new Intent(getApplicationContext(), PairDeviceViewController.class));
+                if(LoginActivity.isGtsrSelected) {
+                    startActivity(new Intent(getApplicationContext(), PairDeviceViewController.class));
+                }else{
+                    calibrationBottomSheet();
+                }
             }
         });
         if (LoginActivity.isGtsrSelected) {
@@ -352,6 +374,88 @@ public class HomeActivity extends AppCompatActivity {
             Log.e("urinetemparray","call"+tempUrineResults.size());
 
         }
+    }
+    public void calibrationBottomSheet() {
+        TextView /*third,*/first,second;
+        View dialogView = getLayoutInflater().inflate(R.layout.file_dailog, null);
+        final BottomSheetDialog cameraBottomSheetDialog = new BottomSheetDialog(Objects.requireNonNull(HomeActivity.this), R.style.BottomSheetDialogTheme);
+        cameraBottomSheetDialog.setContentView(dialogView);
+        LinearLayout calibration = cameraBottomSheetDialog.findViewById(R.id.renamefile);
+        LinearLayout testnow = cameraBottomSheetDialog.findViewById(R.id.showresult);
+        LinearLayout dismiss = cameraBottomSheetDialog.findViewById(R.id.layout_dismiss);
+        LinearLayout layout = cameraBottomSheetDialog.findViewById(R.id.thirdlayout);
+        layout.setVisibility(View.GONE);
+        FrameLayout bottomSheet = (FrameLayout) cameraBottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+        bottomSheet.setBackground(null);
+        first = cameraBottomSheetDialog.findViewById(R.id.first);
+        second = cameraBottomSheetDialog.findViewById(R.id.second);
+        first.setText("Do Calibration");
+        second.setText("TestNow");
+        /*third = cameraBottomSheetDialog.findViewById(R.id.third);
+        third.setText("Delete Result");*/
+        cameraBottomSheetDialog.show();
+
+        calibration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraBottomSheetDialog.dismiss();
+                isClickCalibration=true;
+                startActivity(new Intent(getApplicationContext(), PairDeviceViewController.class));
+                //doCalibrationAlert();
+            }
+        });
+
+        testnow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraBottomSheetDialog.dismiss();
+                if (darkArray.isEmpty() && whiteArray.isEmpty()) {
+                    Log.e("darkArrayisempty", "call");
+                    doCalibrationAlert();
+                }else{
+                    startActivity(new Intent(getApplicationContext(), PairDeviceViewController.class));
+                }
+            }
+        });
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraBottomSheetDialog.cancel();
+            }
+        });
+    }
+    private void doCalibrationAlert(){
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Alert");
+        alertDialogBuilder.setMessage("Calibration for filling Dark and StandardWhite Spectrums")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        startActivity(new Intent(getApplicationContext(), PairDeviceViewController.class));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button positiveButton = alertDialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(Color.parseColor("#FF0B8B42"));
+
+        Button negativeButton = alertDialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(Color.parseColor("#FF0012"));
+    }
+    public ArrayList<Float> getArrayList(String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String json = prefs.getString(key, null);
+        Type type = new TypeToken<ArrayList<Float>>() {
+        }.getType();
+        return gson.fromJson(json, type);
     }
     @Override
     public void onBackPressed() {

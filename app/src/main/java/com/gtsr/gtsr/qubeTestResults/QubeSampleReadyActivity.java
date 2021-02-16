@@ -103,22 +103,19 @@ Button btnNext;
         objResult.setRelationtype(Constants.TestNames.qube.toString());
         objResult.setTest_id(testID);
         objResult.setUserName(getRandomInteger(1,100)+"_" + "AntiBody Analysis");
-
-
-       /* int val= getRandomInteger(1,200);
+        /* int val= getRandomInteger(1,200);
         if((val%2) == 0 ){
             Log.e("setUserName","call"+val);
         }else{
             Log.e("aaaaaaaaa","call"+val);
         }*/
-
         if (UrineResultsDataController.getInstance().insertUrineResultsForMember(objResult)) {
             com.gtsr.gtsr.database.TestFactors objTest = new com.gtsr.gtsr.database.TestFactors();
             objTest.setFlag(false);
             objTest.setUnit("");
 
             objTest.setTestName("SARS-COV-2 AntiBody");
-           int val= getRandomInteger(1,200);
+            int val= getRandomInteger(1,200);
             if((val%2) == 0 ){
                objTest.setResult("Positive");
                objTest.setHealthReferenceRanges("High");

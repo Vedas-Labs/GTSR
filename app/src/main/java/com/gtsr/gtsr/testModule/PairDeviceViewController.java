@@ -39,6 +39,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.gtsr.gtsr.HomeActivity;
+import com.gtsr.gtsr.QUBETestingController;
 import com.gtsr.gtsr.R;
 import com.gtsr.gtsr.RefreshShowingDialog;
 import com.gtsr.gtsr.loginModule.LoginActivity;
@@ -47,6 +49,9 @@ import com.skyfishjy.library.RippleBackground;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SpectroCareSDK;
+import com.spectrochips.spectrumsdk.FRAMEWORK.TestFactors;
+import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
+import com.spectrochips.spectrumsdk.MODELS.SpectroDeviceDataController;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -64,11 +69,15 @@ public class PairDeviceViewController extends AppCompatActivity {
     boolean isConnected = false;
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BT = 1;
-
+    RefreshShowingDialog calibrationDialog;
+    ArrayList<Float> darkArray = new ArrayList<>();
+    ArrayList<Float> whiteArray = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pairdevice);
+        calibrationDialog = new RefreshShowingDialog(PairDeviceViewController.this, "doing calibration..");
+
         ejectDialogue = new RefreshShowingDialog(PairDeviceViewController.this, "Strip Ejecting..");
         refreshShowingDialog = new RefreshShowingDialog(PairDeviceViewController.this);
         inserDialogue = new RefreshShowingDialog(PairDeviceViewController.this, "Strip tray returning..");
@@ -79,9 +88,30 @@ public class PairDeviceViewController extends AppCompatActivity {
             SCConnectionHelper.getInstance().initializeAdapterAndServcie();
             bluetoothAdapter = SCConnectionHelper.getInstance().mBluetoothAdapter;
         }
+
         SCTestAnalysis.getInstance().initializeService();
         loadRecyclerView();
         init();
+
+        if(!LoginActivity.isGtsrSelected){
+            Log.e("quebcall","call");
+            loadInterface();
+            SpectroDeviceDataController.getInstance().fillContext(getApplicationContext());
+            SCTestAnalysis.getInstance().startTestProcess();
+            SCTestAnalysis.getInstance().initializeService();
+         //   QUBETestingController.getInstance().fillContext(getApplicationContext());
+
+            ArrayList<Float> dark = getArrayList("DarkArray");
+            ArrayList<Float> white = getArrayList("WhiteArray");
+            if (dark != null && white != null) {
+                darkArray = dark;
+                whiteArray = white;
+                Log.e("getdark", "call" + dark.toString());
+                Log.e("getwhite", "call" + white.toString());
+            }
+        }
+
+
     }
 
     @Override
@@ -161,7 +191,34 @@ public class PairDeviceViewController extends AppCompatActivity {
                         startActivity(new Intent(PairDeviceViewController.this, DownloadStripViewController.class));
                     }
                 }else{
-                    startActivity(new Intent(PairDeviceViewController.this, SelectTestStripActivity.class));
+                    if (SCConnectionHelper.getInstance().isConnected) {//load dummy command
+                        SCTestAnalysis.getInstance().sendString("$SUV0#");
+                    }
+                    if(HomeActivity.isClickCalibration){
+                        calibrationDialog.showAlert();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                HomeActivity.isClickCalibration=false;
+                                QUBETestingController.getInstance().fillContext(getApplicationContext());
+                                QUBETestingController.getInstance().gettingDarkSpectrum();
+                            }
+                        }, 3000 * 1);
+                    }else{
+                        if (darkArray.isEmpty() && whiteArray.isEmpty()) {
+                            Log.e("darkArrayisempty", "call");
+                            calibrationDialog.showAlert();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    QUBETestingController.getInstance().fillContext(getApplicationContext());
+                                    QUBETestingController.getInstance().gettingDarkSpectrum();
+                                }
+                            }, 3000 * 1);
+                        }else{
+                            startActivity(new Intent(getApplicationContext(), SelectTestStripActivity.class));
+                        }
+                    }
                 }
             }
         });
@@ -294,7 +351,6 @@ public class PairDeviceViewController extends AppCompatActivity {
                             btnStripTray.setVisibility(View.GONE);
                         }
                         adapter.notifyDataSetChanged();
-
                     }
                 });
             }
@@ -561,7 +617,72 @@ public class PairDeviceViewController extends AppCompatActivity {
             }
         }
     }
+    public void loadInterface() {
+        QUBETestingController.getInstance().activatenotifications(new QUBETestingController.QUBETestDataInterface() {
+            @Override
+            public void gettingData(byte[] var1) {
 
+            }
+
+            @Override
+            public void onSuccessForTestComplete(ArrayList<TestFactors> var1, String var2, ArrayList<IntensityChart> var3) {
+
+            }
+
+            @Override
+            public void getRequestAndResponse(String var1) {
+
+            }
+
+            @Override
+            public void onFailureForTesting(String var1) {
+
+            }
+
+            @Override
+            public void isSyncingCompleted(boolean val, ArrayList<Float> white) {
+                saveArrayList(white, "WhiteArray");
+                Log.e("isSyncingCompleted", "call" + white.toString());
+                calibrationDialog.hideRefreshDialog();
+                SCConnectionHelper.getInstance().disconnectWithPeripheral();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void gettingDarkSpectrum(boolean val, ArrayList<Float> dark) {
+                Log.e("gettingDarkSpectrum", "call" + dark.toString());
+                saveArrayList(dark, "DarkArray");
+            }
+        });
+    }
+   /* private void loadDummyCommands() {
+        SCTestAnalysis.getInstance().isTestingCal = true;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (SCConnectionHelper.getInstance().isConnected) {
+                    SCTestAnalysis.getInstance().sendString("$SUV0#");
+                }
+            }
+        }, 2000 * 1);
+    }*/
+   public ArrayList<Float> getArrayList(String key) {
+       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+       Gson gson = new Gson();
+       String json = prefs.getString(key, null);
+       Type type = new TypeToken<ArrayList<Float>>() {
+       }.getType();
+       return gson.fromJson(json, type);
+   }
+    public void saveArrayList(ArrayList<Float> list, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        editor.putString(key, json);
+        editor.apply();
+    }
     public void saveSrting(String isRetrunstrip) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -604,6 +725,7 @@ public class PairDeviceViewController extends AppCompatActivity {
         Log.e("isRetrunstrip", "call");
         super.onBackPressed();
         SCConnectionHelper.getInstance().startScan(false);
+        SCConnectionHelper.getInstance().disconnectWithPeripheral();
         //clearPreferenceData();
         finish();
     }

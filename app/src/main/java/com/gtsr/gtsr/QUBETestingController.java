@@ -48,7 +48,9 @@ public class QUBETestingController {
     private String darkSpectrumTitle = "Dark Spectrum";
     private String standardWhiteTitle = "Standard White (Reference)";
     private boolean isForDarkSpectrum = false;
+    private boolean isFromWhiteSpectrum = false;
     private boolean isCalibration = false;
+    private boolean isEjectType = false;
 
     public static QUBETestingController getInstance() {
         if (ourInstance == null) {
@@ -111,6 +113,7 @@ public class QUBETestingController {
         syncDeviceData(new SCTestAnalysis.TestDataInterface() {
             public void gettingData(byte[] data) {
                 String text = decodeUTF8(data);
+                Log.e("gettingData", "call" + text);
                 socketDidReceiveMessage(text, requestCommand);
             }
         });
@@ -229,6 +232,58 @@ public class QUBETestingController {
         isForDarkSpectrum = false;
     }
 
+    private void performMotorStepsFunction() {
+        Log.e("stripnumberandsize", "call" + stripNumber + "cal" + intensityChartsArray.size());
+        if (stripNumber < motorSteps.size()) {
+            motorStepsControl(motorSteps.get(stripNumber));
+           /* ledControl(false);
+            (new Timer()).schedule(new TimerTask() {
+                public void run() {
+                    motorStepsControl(motorSteps.get(stripNumber));
+                }
+            }, 1000L);*/
+        } /*else {
+            motorStepsControl(motorSteps.get(stripNumber));
+        }*/
+
+    }
+
+    private void motorStepsControl(Steps motorObject) {
+        String direction = Commands.MOVE_STRIP_COUNTER_CLOCKWISE_TAG;
+        if (motorObject.getDirection().equals("CW")) {
+            direction = Commands.MOVE_STRIP_CLOCKWISE_TAG;
+        }
+        SCConnectionHelper.getInstance().prepareCommandForMotorMove(motorObject.getNoOfSteps(), direction);
+    }
+
+    public void ejectStripCommand() {
+        final String ejectCommand = "$MRS900#";
+        Log.e("ejectStripCommand", "call" + ejectCommand);
+        if (SCConnectionHelper.getInstance().isConnected) {
+            isEjectType = true;
+            ledControl(false);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    SCTestAnalysis.getInstance().sendString(ejectCommand);
+                }
+            }, 1000);
+        }
+    }
+
+    private void getIntensity() {
+        (new Timer()).schedule(new TimerTask() {
+            public void run() {
+                requestCommand = Commands.INTESITY_VALUES_TAG;
+                SCTestAnalysis.getInstance().sendString(requestCommand);
+            }
+        }, 1000L);
+    }
+
+    private void ledControl(boolean isOn) {
+        SCConnectionHelper.getInstance().prepareCommandForUV(isOn);
+    }
+
     public void socketDidReceiveMessage(String response, String request) {
         Log.e("datacount", "call" + response + "request" + request);
         if (qubeTestDataInterface != null) {
@@ -273,13 +328,31 @@ public class QUBETestingController {
     private void intensityDataRecieved(String responseData, String request) {
         Log.e("intensityDataRecieved", "call" + request + responseData.length());
         if (processIntensityValues(responseData)) {
-            Log.e("valuesboolean", "call" + isForDarkSpectrum + isCalibration);
             if (!isForDarkSpectrum && !isCalibration) {
                 stripNumber = stripNumber + 1;
                 performMotorStepsFunction();
+            } else if (isFromWhiteSpectrum) {
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        ejectStripCommand();
+                    }
+                }, 1000);
             } else {
                 isForDarkSpectrum = false;
-                // qubeTestDataInterface.isSyncingCompleted(true);
+                Log.e("gettingdark", "called");// getting darkspectrum completed , so for white spectrum need to on led
+                isCalibration = true;
+                if (qubeTestDataInterface != null) {
+                    qubeTestDataInterface.gettingDarkSpectrum(true, darkSpectrumIntensityArray);
+                    syncDone();
+                }
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        requestCommand = Commands.UV_TURN_ON;
+                        ledControl(true);
+                    }
+                }, 1000);
             }
         } else {
             requestCommand = "";
@@ -292,60 +365,24 @@ public class QUBETestingController {
 
     }
 
-    private void performMotorStepsFunction() {
-        Log.e("stripnumberandsize", "call" + stripNumber + "cal" + intensityChartsArray.size());
-        if (stripNumber < motorSteps.size()) {
-            motorStepsControl(motorSteps.get(stripNumber));
-           /* ledControl(false);
-            (new Timer()).schedule(new TimerTask() {
-                public void run() {
-                    motorStepsControl(motorSteps.get(stripNumber));
-                }
-            }, 1000L);*/
-        } /*else {
-            motorStepsControl(motorSteps.get(stripNumber));
-        }*/
-
-    }
-
-    private void motorStepsControl(Steps motorObject) {
-        String direction = Commands.MOVE_STRIP_COUNTER_CLOCKWISE_TAG;
-        if (motorObject.getDirection().equals("CW")) {
-            direction = Commands.MOVE_STRIP_CLOCKWISE_TAG;
-        }
-        SCConnectionHelper.getInstance().prepareCommandForMotorMove(motorObject.getNoOfSteps(), direction);
-    }
-
     private void dataRecieved(String responseData, String request) {
         Log.e("dataRecieved", "call" + request + responseData);
         processResponseData(request, responseData);
-    }
-
-    private void getIntensity() {
-        (new Timer()).schedule(new TimerTask() {
-            public void run() {
-                requestCommand = Commands.INTESITY_VALUES_TAG;
-                SCTestAnalysis.getInstance().sendString(requestCommand);
-            }
-        }, 1000L);
-    }
-
-    private void ledControl(boolean isOn) {
-        SCConnectionHelper.getInstance().prepareCommandForUV(isOn);
     }
 
     private void processResponseData(String command, String response) {
         Log.e("DeviceData", "CalledResponse" + command + ":" + response);
         if (response.contains("OK")) {
             if (command.equals(Commands.UV_TURN_ON)) {
-                if(isCalibration){
+                if (isCalibration) {
                     Log.e("isCalibrationUV_TURN_ON", "call");
+                    // getting whitespectrum need to perform motorsteps upt0 75 * 11 steps for all 10 test items.
                     (new Timer()).schedule(new TimerTask() {
                         public void run() {
-                            getIntensity();
+                            SCConnectionHelper.getInstance().prepareCommandForMotorMove(825, "MLS");
                         }
                     }, 1000L);
-                }else {
+                } else {
                     Log.e("UV_TURN_ON", "call");
                     (new Timer()).schedule(new TimerTask() {
                         public void run() {
@@ -355,14 +392,14 @@ public class QUBETestingController {
                     }, 1000L);
                 }
             } else if (command.equals(Commands.UV_TURN_OFF)) {
-                if(isCalibration){
+                if (isCalibration) {
                     Log.e("isCalibrationUV_TURN_OFF", "call");
-                    isCalibration = false;
+                    /*isCalibration = false;
                     if (qubeTestDataInterface != null) {
                         qubeTestDataInterface.isSyncingCompleted(true, standardWhiteIntensityArray);
                         syncDone();
-                    }
-                }else {
+                    }*/
+                } else {
                     if (qubeTestDataInterface != null) {
                         qubeTestDataInterface.onSuccessForTestComplete(null, "test Completed", intensityChartsArray);
                     }
@@ -375,30 +412,50 @@ public class QUBETestingController {
                 }
             }, 1000L);
         } else if (response.contains("STP")) {
-            Log.e("Stripnumberinstp", "call" + stripNumber);
-            if (stripNumber == -1) {
-                (new Timer()).schedule(new TimerTask() {
-                    public void run() {
-                        requestCommand = Commands.UV_TURN_ON;
-                        ledControl(true);
+            Log.e("isCalibration", "call" + isCalibration);
+            if (isCalibration) {   // for calibration function
+                Log.e("stpcalibration", "call");
+                if (isEjectType) {
+                    isCalibration = false;
+                    isEjectType = false;
+                    isFromWhiteSpectrum=false;
+                    if (qubeTestDataInterface != null) {
+                        qubeTestDataInterface.isSyncingCompleted(true, standardWhiteIntensityArray);
+                        syncDone();
                     }
-                }, 1000L);
-            } else if (stripNumber != motorSteps.size() - 1) {
-                int dwellTime = ((Steps) motorSteps.get(stripNumber)).getDwellTimeInSec();
-                Log.e("Waited DwellTime:", "" + dwellTime);
-                Log.e("Strip Number:", "" + stripNumber);
-                (new Timer()).schedule(new TimerTask() {
-                    public void run() {
-                        requestCommand = "";
-                        //  stripNumber = stripNumber + 1;
-                        getIntensity();
-                    }
-                }, 1000L);
-            } else {
-                Log.e("stripnumber0called", "call");
-                stripNumber = -1;
-                requestCommand = Commands.UV_TURN_OFF;
-                ledControl(false);
+                } else {
+                    (new Timer()).schedule(new TimerTask() {
+                        public void run() {
+                            getIntensity();
+                        }
+                    }, 1000L);
+                }
+            } else { //for motorsteps for testing
+                if (stripNumber == -1) {
+                    Log.e("Stripnumberinstp", "call" + stripNumber);
+                    (new Timer()).schedule(new TimerTask() {
+                        public void run() {
+                            requestCommand = Commands.UV_TURN_ON;
+                            ledControl(true);
+                        }
+                    }, 1000L);
+                } else if (stripNumber != motorSteps.size() - 1) {
+                    int dwellTime = ((Steps) motorSteps.get(stripNumber)).getDwellTimeInSec();
+                    Log.e("Waited DwellTime:", "" + dwellTime);
+                    Log.e("Strip Number:", "" + stripNumber);
+                    (new Timer()).schedule(new TimerTask() {
+                        public void run() {
+                            requestCommand = "";
+                            //  stripNumber = stripNumber + 1;
+                            getIntensity();
+                        }
+                    }, 1000L);
+                } else { // if testing completed
+                    Log.e("stripnumber0called", "call");
+                    stripNumber = -1;
+                    requestCommand = Commands.UV_TURN_OFF;
+                    ledControl(false);
+                }
             }
         } else if (response.contains("ERR")) {
             Log.e("ERRdetected", "call");
@@ -436,7 +493,7 @@ public class QUBETestingController {
                     IntensityChart object = (IntensityChart) intensityChartsArray.get(position);
                     object.setyAxisArray(darkSpectrumIntensityArray);
                     intensityChartsArray.set(position, object);
-                    isCalibration = true;
+                   /* isCalibration = true;
                     Log.e("intensityArrayfordark", "call" + object.getyAxisArray().toString());
                     if (qubeTestDataInterface != null) {
                         qubeTestDataInterface.gettingDarkSpectrum(true, darkSpectrumIntensityArray);
@@ -448,7 +505,7 @@ public class QUBETestingController {
                             requestCommand = Commands.UV_TURN_ON;
                             ledControl(true);
                         }
-                    }, 1000);
+                    }, 1000);*/
                 }
             } else if (isCalibration) {
                 standardWhiteIntensityArray = intensityArray;
@@ -457,14 +514,16 @@ public class QUBETestingController {
                     IntensityChart object = intensityChartsArray.get(position1);
                     object.setyAxisArray(standardWhiteIntensityArray);
                     intensityChartsArray.set(position1, object);
+                    isFromWhiteSpectrum = true;
                     Log.e("forwhitespectrum", "call" + object.getyAxisArray().toString());
-                    new Timer().schedule(new TimerTask() {
+                   /* new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            requestCommand=Commands.UV_TURN_OFF;
-                            ledControl(false);
+                            ejectStripCommand();
+                            *//*requestCommand = Commands.UV_TURN_OFF;
+                            ledControl(false);*//*
                         }
-                    }, 1000);
+                    }, 1000);*/
                 }
             } else {
                 setIntensityArrayForTestItem();
@@ -480,7 +539,6 @@ public class QUBETestingController {
                     }
                 }
             }
-
             return true;
         }
     }
@@ -496,7 +554,7 @@ public class QUBETestingController {
 
     private void setIntensityArrayForTestItem() {
         Steps currentObject = (Steps) motorSteps.get(stripNumber);
-        Log.e("setIntensityForTestItem","call"+currentObject.getStandardWhiteIndex());
+        Log.e("setIntensityForTestItem", "call" + currentObject.getStandardWhiteIndex());
         Log.e("setIntensitydarkIntensity", "call" + darkSpectrumIntensityArray.toString());
         Log.e("IntIntensity", "call" + intensityArray.toString());
 
