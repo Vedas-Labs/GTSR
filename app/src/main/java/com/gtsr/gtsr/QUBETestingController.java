@@ -393,7 +393,7 @@ public class QUBETestingController {
                 }
             } else if (command.equals(Commands.UV_TURN_OFF)) {
                 if (isCalibration) {
-                    Log.e("isCalibrationUV_TURN_OFF", "call");
+                    Log.e("isCalibrationTURN_OFF", "call");
                     /*isCalibration = false;
                     if (qubeTestDataInterface != null) {
                         qubeTestDataInterface.isSyncingCompleted(true, standardWhiteIntensityArray);
@@ -555,7 +555,7 @@ public class QUBETestingController {
     private void setIntensityArrayForTestItem() {
         Steps currentObject = (Steps) motorSteps.get(stripNumber);
         Log.e("setIntensityForTestItem", "call" + currentObject.getStandardWhiteIndex());
-        Log.e("setIntensitydarkIntensity", "call" + darkSpectrumIntensityArray.toString());
+        Log.e("setIntensitydark", "call" + darkSpectrumIntensityArray.toString());
         Log.e("IntIntensity", "call" + intensityArray.toString());
 
         int i;
