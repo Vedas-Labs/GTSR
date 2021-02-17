@@ -55,6 +55,7 @@ public class SelectTestStripActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_test_strip);
         imgBack = findViewById(R.id.back);
         txt_calibration = findViewById(R.id.tool_txt2);
+        txt_calibration.setVisibility(View.GONE);
 
         loadInterface();
         getfilesDialogue = new RefreshShowingDialog(SelectTestStripActivity.this, "Strip Ejecting..");

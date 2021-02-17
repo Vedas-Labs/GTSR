@@ -19,6 +19,7 @@ import com.gtsr.gtsr.database.TestFactorDataController;
 import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.database.UrineresultsModel;
 import com.gtsr.gtsr.testModule.AnalizingPageViewController;
+import com.gtsr.gtsr.testModule.ResultPageViewController;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
 import com.spectrochips.spectrumsdk.FRAMEWORK.TestFactors;
 import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
@@ -26,9 +27,8 @@ import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
 import java.util.ArrayList;
 
 public class QubeSampleReadyActivity extends AppCompatActivity {
-Button btnNext;
+    Button btnNext;
     RefreshShowingDialog refreshShowingDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +41,19 @@ Button btnNext;
             public void onClick(View v) {
                 refreshShowingDialog.showAlert();
                 QUBETestingController.getInstance().startTesting();
-              //  startActivity(new Intent(QubeSampleReadyActivity.this,QubeTestResultActivity.class));
+                //  startActivity(new Intent(QubeSampleReadyActivity.this,QubeTestResultActivity.class));
             }
         });
     }
+
     String currentTime = String.valueOf(System.currentTimeMillis() / 1000L);
     String testID = "test" + String.valueOf(getRandomInteger(1000, 10));
 
     public int getRandomInteger(int maximum, int minimum) {
         return ((int) (Math.random() * (maximum - minimum))) + minimum;
     }
-    private void loadInterfaces(){
+
+    private void loadInterfaces() {
         QUBETestingController.getInstance().activatenotifications(new QUBETestingController.QUBETestDataInterface() {
             @Override
             public void gettingData(byte[] var1) {
@@ -60,14 +62,16 @@ Button btnNext;
 
             @Override
             public void onSuccessForTestComplete(ArrayList<TestFactors> var1, String var2, ArrayList<IntensityChart> var3) {
-               runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       refreshShowingDialog.hideRefreshDialog();
-                       Toast.makeText(getApplicationContext(),var2,Toast.LENGTH_SHORT).show();
-                   }
-               });
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadQubeResultsDataTODb();
+                       /*refreshShowingDialog.hideRefreshDialog();
+                       Toast.makeText(getApplicationContext(),var2,Toast.LENGTH_SHORT).show();*/
+                    }
+                });
             }
+
             @Override
             public void getRequestAndResponse(String var1) {
 
@@ -102,7 +106,7 @@ Button btnNext;
         objResult.setIsFasting("false");
         objResult.setRelationtype(Constants.TestNames.qube.toString());
         objResult.setTest_id(testID);
-        objResult.setUserName(getRandomInteger(1,100)+"_" + "AntiBody Analysis");
+        objResult.setUserName(getRandomInteger(1, 100) + "_" + "AntiBody Analysis");
         /* int val= getRandomInteger(1,200);
         if((val%2) == 0 ){
             Log.e("setUserName","call"+val);
@@ -115,21 +119,23 @@ Button btnNext;
             objTest.setUnit("");
 
             objTest.setTestName("SARS-COV-2 AntiBody");
-            int val= getRandomInteger(1,200);
-            if((val%2) == 0 ){
-               objTest.setResult("Positive");
-               objTest.setHealthReferenceRanges("High");
-               objTest.setValue(String.valueOf(val));
-           }else {
-               objTest.setResult("Negative");
-               objTest.setHealthReferenceRanges("Borderline");
-               objTest.setValue(String.valueOf(val));
-           }
+            int val = getRandomInteger(1, 200);
+            if ((val % 2) == 0) {
+                objTest.setResult("Positive");
+                objTest.setHealthReferenceRanges("High");
+                objTest.setValue(String.valueOf(val));
+            } else {
+                objTest.setResult("Negative");
+                objTest.setHealthReferenceRanges("Borderline");
+                objTest.setValue(String.valueOf(val));
+            }
             objTest.setUrineresultsModel(UrineResultsDataController.getInstance().currenturineresultsModel);
             if (TestFactorDataController.getInstance().insertTestFactorResults(objTest)) {
                 refreshShowingDialog.hideRefreshDialog();
+                Toast.makeText(getApplicationContext(), "Testing Completed", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), QubeTestResultActivity.class));
+
             }
-            Toast.makeText(getApplicationContext(), "Testing Completed", Toast.LENGTH_SHORT).show();
         }
     }
 }

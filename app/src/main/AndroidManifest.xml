@@ -78,6 +78,7 @@
         <activity android:name=".testModule.PastResultsActivity" />
         <activity android:name=".testModule.HtmltoPdfConversionActivity" />
         <activity android:name=".qubeTestResults.QUBEPastResultsActivity" />
+        <activity android:name=".qubeTestResults.QUBEHtmltoPdfConversionActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

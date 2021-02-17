@@ -34,6 +34,7 @@ import com.gtsr.gtsr.database.TestFactorDataController;
 import com.gtsr.gtsr.database.TestFactors;
 import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.model.QubeResultModel;
+import com.gtsr.gtsr.testModule.HtmltoPdfConversionActivity;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -108,8 +109,9 @@ public class QubeTestResultActivity extends AppCompatActivity {
         img_print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bitmap = loadBitmapFromView(rl_pdf, rl_pdf.getWidth(), rl_pdf.getHeight());
-                createPdf();
+                startActivity(new Intent(getApplicationContext(), QUBEHtmltoPdfConversionActivity.class));
+                //  bitmap = loadBitmapFromView(rl_pdf, rl_pdf.getWidth(), rl_pdf.getHeight());
+               // createPdf();
             }
         });
         img_share.setOnClickListener(new View.OnClickListener() {

@@ -131,7 +131,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-
         imgTextNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -427,7 +426,7 @@ public class HomeActivity extends AppCompatActivity {
     private void doCalibrationAlert(){
         androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Alert");
-        alertDialogBuilder.setMessage("Calibration for filling Dark and StandardWhite Spectrums")
+        alertDialogBuilder.setMessage("Doing Calibration process for getting Dark & White Spectrums")
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

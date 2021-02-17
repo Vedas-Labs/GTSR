@@ -132,7 +132,6 @@ public class QUBETestingController {
         loadPixelArray();
         reprocessWavelength();
         prepareChartsDataForIntensity();
-        isCalibration = false;
         isForDarkSpectrum = true;
         getIntensity();
     }
@@ -169,7 +168,6 @@ public class QUBETestingController {
 
             for (int index = 0; index < pixelXAxis.size(); ++index) {
                 Double d = poly.predictY(resultArray, (double) (Float) pixelXAxis.get(index)) * 100.0D / 100.0D;
-                //  Log.e("zzzzzzzz", "call" + d.floatValue());
                 wavelengthXAxis.add(d.floatValue());
             }
         }
@@ -229,23 +227,20 @@ public class QUBETestingController {
         reflectenceChartsArray.clear();
         concentrationArray.clear();
         stripNumber = -1;
-        isForDarkSpectrum = false;
+        setDefaultValues();
+    }
+    private void setDefaultValues(){
+        isForDarkSpectrum=false;
+        isFromWhiteSpectrum=false;
+        isEjectType=false;
+        isCalibration=false;
     }
 
     private void performMotorStepsFunction() {
         Log.e("stripnumberandsize", "call" + stripNumber + "cal" + intensityChartsArray.size());
         if (stripNumber < motorSteps.size()) {
             motorStepsControl(motorSteps.get(stripNumber));
-           /* ledControl(false);
-            (new Timer()).schedule(new TimerTask() {
-                public void run() {
-                    motorStepsControl(motorSteps.get(stripNumber));
-                }
-            }, 1000L);*/
-        } /*else {
-            motorStepsControl(motorSteps.get(stripNumber));
-        }*/
-
+        }
     }
 
     private void motorStepsControl(Steps motorObject) {
@@ -394,11 +389,6 @@ public class QUBETestingController {
             } else if (command.equals(Commands.UV_TURN_OFF)) {
                 if (isCalibration) {
                     Log.e("isCalibrationTURN_OFF", "call");
-                    /*isCalibration = false;
-                    if (qubeTestDataInterface != null) {
-                        qubeTestDataInterface.isSyncingCompleted(true, standardWhiteIntensityArray);
-                        syncDone();
-                    }*/
                 } else {
                     if (qubeTestDataInterface != null) {
                         qubeTestDataInterface.onSuccessForTestComplete(null, "test Completed", intensityChartsArray);
@@ -416,9 +406,7 @@ public class QUBETestingController {
             if (isCalibration) {   // for calibration function
                 Log.e("stpcalibration", "call");
                 if (isEjectType) {
-                    isCalibration = false;
-                    isEjectType = false;
-                    isFromWhiteSpectrum=false;
+                    setDefaultValues();
                     if (qubeTestDataInterface != null) {
                         qubeTestDataInterface.isSyncingCompleted(true, standardWhiteIntensityArray);
                         syncDone();
@@ -440,13 +428,10 @@ public class QUBETestingController {
                         }
                     }, 1000L);
                 } else if (stripNumber != motorSteps.size() - 1) {
-                    int dwellTime = ((Steps) motorSteps.get(stripNumber)).getDwellTimeInSec();
-                    Log.e("Waited DwellTime:", "" + dwellTime);
                     Log.e("Strip Number:", "" + stripNumber);
                     (new Timer()).schedule(new TimerTask() {
                         public void run() {
                             requestCommand = "";
-                            //  stripNumber = stripNumber + 1;
                             getIntensity();
                         }
                     }, 1000L);
@@ -493,19 +478,6 @@ public class QUBETestingController {
                     IntensityChart object = (IntensityChart) intensityChartsArray.get(position);
                     object.setyAxisArray(darkSpectrumIntensityArray);
                     intensityChartsArray.set(position, object);
-                   /* isCalibration = true;
-                    Log.e("intensityArrayfordark", "call" + object.getyAxisArray().toString());
-                    if (qubeTestDataInterface != null) {
-                        qubeTestDataInterface.gettingDarkSpectrum(true, darkSpectrumIntensityArray);
-                        syncDone();
-                    }
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            requestCommand = Commands.UV_TURN_ON;
-                            ledControl(true);
-                        }
-                    }, 1000);*/
                 }
             } else if (isCalibration) {
                 standardWhiteIntensityArray = intensityArray;
@@ -516,14 +488,6 @@ public class QUBETestingController {
                     intensityChartsArray.set(position1, object);
                     isFromWhiteSpectrum = true;
                     Log.e("forwhitespectrum", "call" + object.getyAxisArray().toString());
-                   /* new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            ejectStripCommand();
-                            *//*requestCommand = Commands.UV_TURN_OFF;
-                            ledControl(false);*//*
-                        }
-                    }, 1000);*/
                 }
             } else {
                 setIntensityArrayForTestItem();
@@ -584,7 +548,6 @@ public class QUBETestingController {
         if (stripNumber == motorSteps.size() - 1) {
             Log.e("testingended", "call");
         }
-
     }
 
     private ArrayList<Float> getSubstratedArray(ArrayList<Float> spectrumIntensityArray, ArrayList<Float> darkSpectrumIntensityArray) {
@@ -602,9 +565,6 @@ public class QUBETestingController {
         for (int i = 0; i < intensityChartsArray.size(); ++i) {
             IntensityChart object = (IntensityChart) intensityChartsArray.get(i);
             if (object.getTestName().equals(title)) {
-                /*Log.e("getPositionForTilte", "" + object.getTestName());
-                Log.e("getPositionForTilte", "" + object.getSubstratedArray().toString());
-               */
                 return i;
             }
         }
@@ -696,8 +656,6 @@ public class QUBETestingController {
 
     public void loadPixelAndWaveLengthArrays(ArrayList<Float> dark, ArrayList<Float> sw) {
         clearPreviousTestResulsArray();
-        isCalibration = false;
-        isForDarkSpectrum = false;
         loadPixelArray();
         reprocessWavelength();
         prepareBeforeChartsDataForIntensity(dark, sw);
