@@ -35,6 +35,7 @@ import com.gtsr.gtsr.database.TestFactors;
 import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.model.QubeResultModel;
 import com.gtsr.gtsr.testModule.HtmltoPdfConversionActivity;
+import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -187,6 +188,7 @@ public class QubeTestResultActivity extends AppCompatActivity {
             HomeActivity.isFromHome = false;
             finish();
         } else {
+            SCConnectionHelper.getInstance().disconnectWithPeripheral();
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             // intent.addCategory(Intent.CATEGORY_HOME);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -320,6 +322,5 @@ public class QubeTestResultActivity extends AppCompatActivity {
     public void onBackPressed() {
         loadBackAction();
         super.onBackPressed();
-
     }
 }

@@ -65,7 +65,7 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_htmlconverttopdf);
+        setContentView(R.layout.activity_qubehtmltopdf);
         Bundle extras = getIntent().getExtras();
         urineresultsModel = UrineResultsDataController.getInstance().currenturineresultsModel;
         /*if (extras != null) {
@@ -86,8 +86,6 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
 
     private void init() {
         final String AUTHORITY = "com.spectrochip.spectrocare";
-
-
         cancel = (TextView) findViewById(R.id.cancel);//Spectrum//testrsult
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,7 +324,7 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
                     "                </td>\n" +
                     "            </tr>\n\n" +
                     "            <tr>\n" +
-                    "                <td>#NOTE_MSG# :</td>\n" +
+                    "                <td>#NOTE_MSG# </td>\n" +
                     "            </tr>\n" +
                     "        </table>\n" +
                     "        <br>\n" +
@@ -478,25 +476,6 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
             return null;
         }
     }
-    //Calculate BMI
-    private float calculateBMI(float weight, float height) {
-        return (float) (weight / (height * height));
-    }
-
-
-    public String getAge(int year, int month, int day) {
-        Calendar dob = Calendar.getInstance();
-        Calendar today = Calendar.getInstance();
-        dob.set(year, month, day);
-        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
-            age--;
-        }
-        Integer ageInt = new Integer(age);
-        String ageS = ageInt.toString();
-        return ageS;
-    }
-
     public void updateLanguages() {
         export.setText(LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.EXPORT_KEY));
         cancel.setText(LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.CANCEL_KEY));

@@ -115,7 +115,6 @@ public class AntiBodyTestAdapter extends RecyclerView.Adapter<AntiBodyTestAdapte
                 }
             }
             Log.e("zxcvvvvv","call"+tempUrineResults.size());
-
         }
     }
 }
