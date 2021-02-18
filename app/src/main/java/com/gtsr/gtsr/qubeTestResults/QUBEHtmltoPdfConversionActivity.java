@@ -22,14 +22,18 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
+import com.gtsr.gtsr.Constants;
 import com.gtsr.gtsr.LanguagesKeys;
+import com.gtsr.gtsr.QUBETestingController;
 import com.gtsr.gtsr.R;
 import com.gtsr.gtsr.dataController.ExportToExcelFileController;
 import com.gtsr.gtsr.dataController.LanguageTextController;
+import com.gtsr.gtsr.dataController.QubeController;
 import com.gtsr.gtsr.database.TestFactorDataController;
 import com.gtsr.gtsr.database.TestFactors;
 import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.database.UrineresultsModel;
+import com.gtsr.gtsr.model.QubeResultModel;
 import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
 
 import java.io.BufferedWriter;
@@ -63,7 +67,7 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_htmlconverttopdf);
         Bundle extras = getIntent().getExtras();
-        urineresultsModel=UrineResultsDataController.getInstance().currenturineresultsModel;
+        urineresultsModel = UrineResultsDataController.getInstance().currenturineresultsModel;
         /*if (extras != null) {
             String position1 = extras.getString("key");
             position = Integer.parseInt(position1);
@@ -72,9 +76,8 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
             TestFactorDataController.getInstance().fetchTestFactorresults(urineresultsModel);
             //The key argument here must match that used in the other activity
         }*/
-       /* ExportToExcelFileController.getInstance().fillContext(getApplicationContext());
+       /*ExportToExcelFileController.getInstance().fillContext(getApplicationContext());
         ExportToExcelFileController.getInstance().creatTotalExcel(true,testResults,intensityArray);
-
        */
         init();
         exportpdf();
@@ -114,10 +117,10 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
             public void onClick(View v) {
                 String date = UrineResultsDataController.getInstance().convertTimestampTodateInPdf(urineresultsModel.getTestedTime());
                 String fileNmae1;
-                if(urineresultsModel!=null){//+"UrineTestReport"
-                    fileNmae1 =  urineresultsModel.getUserName() + "_" + date + ".pdf";
-                }else{
-                    fileNmae1 ="UrineTestReport" + "_" + date + ".pdf";
+                if (urineresultsModel != null) {//+"UrineTestReport"
+                    fileNmae1 = urineresultsModel.getUserName() + "_" + date + ".pdf";
+                } else {
+                    fileNmae1 = "UrineTestReport" + "_" + date + ".pdf";
                 }
                 fileName = fileNmae1;
 
@@ -314,12 +317,27 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
                     "            </tbody>\n" +
                     "        </table>\n" +
                     "        <br>\n" +
+                    /////// for note and notemsg text in pdf formate
+                    "        <br>\n" +
+                    "        <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" class=\"container clint-details\" style=\" font-family:Lato, Helvetica, sans-serif; table-layout:fixed; margin:0 auto;max-width: 95% \">\n" +
+                    "            <tr>\n" +
+                    "                <td style=\"width: 110px\">\n" +
+                    "                    #NOTE_TITLE# :\n" +
+                    "                </td>\n" +
+                    "            </tr>\n\n" +
+                    "            <tr>\n" +
+                    "                <td>#NOTE_MSG# :</td>\n" +
+                    "            </tr>\n" +
+                    "        </table>\n" +
+                    "        <br>\n" +
+                    "        \n" +
+                    ////////////
                     "    </body>\n" +
                     "</html>\n";
             prepareHumanPDF();
 
         } catch (Exception e) {
-            Log.e("exception", "preparepdf"+e);
+            Log.e("exception", "preparepdf" + e);
             e.printStackTrace();
         }
     }
@@ -336,12 +354,13 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
         }
 
         String pathToReportHTMLTemplate = "/sdcard/myTest.html";
-        if(urineresultsModel!=null) {
+        if (urineresultsModel != null) {
             renderTestReport(pathToReportHTMLTemplate, convertDate, urineresultsModel.getUserName(), "f", "12", client.getTest_id());
-        }else{
+        } else {
             renderTestReport(pathToReportHTMLTemplate, convertDate, "zz", "f", "12", client.getTest_id());
         }
     }
+
     public String renderTestReport(String htmlPath, String date, String patientName, String gender, String age, String clientID) {
         try {
 
@@ -352,7 +371,7 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
             htmlContentString = htmlContentString.replace("#Test_Time_TITLE#", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.TEST_TIME_KEY));
 
             htmlContentString = htmlContentString.replace("#COMPANY_NAME#", "");
-            htmlContentString = htmlContentString.replace("#PHONE_NUMBER#","");
+            htmlContentString = htmlContentString.replace("#PHONE_NUMBER#", "");
             String faxString = "<li><span><b>Fax:</b>#FAX_NUMBER#</span></li>";
 
             /*if (HospitalDataController.getInstance().currentHospital.getFax().isEmpty())
@@ -365,10 +384,10 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
             htmlContentString = htmlContentString.replace("#FAX_NUMBER#", "");
 
             //  }
-            htmlContentString = htmlContentString.replace("#ADDRESS1#","");
+            htmlContentString = htmlContentString.replace("#ADDRESS1#", "");
             htmlContentString = htmlContentString.replace("#CLIENT_ID#", clientID);
             htmlContentString = htmlContentString.replace("#CLEINT_NAME#", patientName);
-            htmlContentString = htmlContentString.replace("#REPORT_DATE#",date/* UrineResultsDataController.getInstance().convertTimestampTodate(String.valueOf(System.currentTimeMillis() / 1000L))*/);
+            htmlContentString = htmlContentString.replace("#REPORT_DATE#", date/* UrineResultsDataController.getInstance().convertTimestampTodate(String.valueOf(System.currentTimeMillis() / 1000L))*/);
             htmlContentString = htmlContentString.replace("#GENDER#", "");
             htmlContentString = htmlContentString.replace("#AGE#", age);
             htmlContentString = htmlContentString.replace("#TEST_TIME#", date);
@@ -418,14 +437,25 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
             htmlContentString = htmlContentString.replace("Report Date", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.REPORT_DATE_KEY));
             htmlContentString = htmlContentString.replace("Test Time", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.TEST_TIME_KEY));
             htmlContentString = htmlContentString.replace("S.NO", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.SNO_KEY));
-            htmlContentString = htmlContentString.replace("UNIT","Unit");
+            htmlContentString = htmlContentString.replace("UNIT", "Unit");
             htmlContentString = htmlContentString.replace("REFERENCE RANGE", "Reference Range");
             htmlContentString = htmlContentString.replace("Urine Test Report", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.URINE_TEST_REPORT_KEY));
             htmlContentString = htmlContentString.replace("TEST ITEM", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.TEST_ITEM_KEY));
             htmlContentString = htmlContentString.replace("VALUE", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.VALUE_KEY));
             htmlContentString = htmlContentString.replace("RESULT", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.RESULT_KEY));
             //  htmlContentString = htmlContentString.replace("FLAG", LanguageTextController.getInstance().currentLanguageDictionary.get(LanguagesKeys.FLAG_KEY));
-            htmlContentString = htmlContentString.replace("Phone","");
+            htmlContentString = htmlContentString.replace("Phone", "");
+            htmlContentString = htmlContentString.replace("#NOTE_TITLE#", "Note");
+
+            ArrayList<TestFactors> testFactorsArrayList = TestFactorDataController.getInstance().fetchTestFactorresults(UrineResultsDataController.getInstance().currenturineresultsModel);
+            if (QubeController.getInstance().qubeResultList.size() > 0) {
+                for (int i = 0; i < QubeController.getInstance().qubeResultList.size(); i++) {
+                    QubeResultModel resultModel = QubeController.getInstance().qubeResultList.get(i);
+                    if (resultModel.getTestResult().contains(testFactorsArrayList.get(0).getResult())) {
+                        htmlContentString = htmlContentString.replace("#NOTE_MSG#", resultModel.getResultMessage());
+                    }
+                }
+            }
 
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
@@ -448,7 +478,6 @@ public class QUBEHtmltoPdfConversionActivity extends Activity {
             return null;
         }
     }
-
     //Calculate BMI
     private float calculateBMI(float weight, float height) {
         return (float) (weight / (height * height));

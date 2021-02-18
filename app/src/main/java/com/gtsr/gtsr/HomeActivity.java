@@ -389,8 +389,8 @@ public class HomeActivity extends AppCompatActivity {
         first = cameraBottomSheetDialog.findViewById(R.id.first);
         second = cameraBottomSheetDialog.findViewById(R.id.second);
         first.setText("Do Calibration");
-        second.setText("TestNow");
-        /*third = cameraBottomSheetDialog.findViewById(R.id.third);
+        second.setText("Test Now");
+        /* third = cameraBottomSheetDialog.findViewById(R.id.third);
         third.setText("Delete Result");*/
         cameraBottomSheetDialog.show();
 
