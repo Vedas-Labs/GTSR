@@ -199,6 +199,11 @@ public class SelectTestStripActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onMovingToStripTrayOut(String var1) {
+
+            }
+
+            @Override
             public void isSyncingCompleted(boolean val, ArrayList<Float> white) {
                 saveArrayList(white, "WhiteArray");
                 Log.e("isSyncingCompleted", "call" + white.toString());

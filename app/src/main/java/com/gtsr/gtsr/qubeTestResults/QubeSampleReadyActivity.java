@@ -20,6 +20,7 @@ import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.database.UrineresultsModel;
 import com.gtsr.gtsr.testModule.AnalizingPageViewController;
 import com.gtsr.gtsr.testModule.ResultPageViewController;
+import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
 import com.spectrochips.spectrumsdk.FRAMEWORK.TestFactors;
 import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
@@ -28,13 +29,16 @@ import java.util.ArrayList;
 
 public class QubeSampleReadyActivity extends AppCompatActivity {
     Button btnNext;
-    RefreshShowingDialog refreshShowingDialog;
+    RefreshShowingDialog refreshShowingDialog, stripTrayOutDialogue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qube_sample_ready);
         btnNext = findViewById(R.id.btn_start);
         refreshShowingDialog = new RefreshShowingDialog(QubeSampleReadyActivity.this, "testing..");
+
+        stripTrayOutDialogue = new RefreshShowingDialog(QubeSampleReadyActivity.this, "Moving Strip Out..");
         loadInterfaces();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +48,23 @@ public class QubeSampleReadyActivity extends AppCompatActivity {
                 //  startActivity(new Intent(QubeSampleReadyActivity.this,QubeTestResultActivity.class));
             }
         });
+
+        performStripTrayOutFunction();
+    }
+
+    private void performStripTrayOutFunction() {
+        if (SCConnectionHelper.getInstance().isConnected) {
+            stripTrayOutDialogue.showAlert();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (SCConnectionHelper.getInstance().isConnected) {
+                        QUBETestingController.getInstance().performStripTrayOutCommand();
+                    }
+                }
+            }, 1000 * 1);
+        }
+
     }
 
     String currentTime = String.valueOf(System.currentTimeMillis() / 1000L);
@@ -59,7 +80,6 @@ public class QubeSampleReadyActivity extends AppCompatActivity {
             public void gettingData(byte[] var1) {
 
             }
-
             @Override
             public void onSuccessForTestComplete(ArrayList<TestFactors> var1, String var2, ArrayList<IntensityChart> var3) {
                 runOnUiThread(new Runnable() {
@@ -71,15 +91,23 @@ public class QubeSampleReadyActivity extends AppCompatActivity {
                     }
                 });
             }
-
             @Override
             public void getRequestAndResponse(String var1) {
 
             }
-
             @Override
             public void onFailureForTesting(String var1) {
 
+            }
+            @Override
+            public void onMovingToStripTrayOut(String var1) {
+                Log.e("onMovingToStripTrayOut", "call");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stripTrayOutDialogue.hideRefreshDialog();
+                    }
+                });
             }
 
             @Override

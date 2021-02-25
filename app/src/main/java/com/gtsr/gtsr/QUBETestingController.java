@@ -51,13 +51,13 @@ public class QUBETestingController {
     private boolean isFromWhiteSpectrum = false;
     private boolean isCalibration = false;
     private boolean isEjectType = false;
+    private boolean isFromStripTryOut = false;
 
     public static QUBETestingController getInstance() {
         if (ourInstance == null) {
             ourInstance = new QUBETestingController();
             ourInstance.hexaDecimalArray = new ArrayList();
         }
-
         return ourInstance;
     }
 
@@ -381,6 +381,7 @@ public class QUBETestingController {
                     Log.e("UV_TURN_ON", "call");
                     (new Timer()).schedule(new TimerTask() {
                         public void run() {
+                            //step 3 for getting T intencity
                             stripNumber = 0;
                             motorStepsControl(motorSteps.get(stripNumber));
                         }
@@ -419,14 +420,20 @@ public class QUBETestingController {
                     }, 1000L);
                 }
             } else { //for motorsteps for testing
-                if (stripNumber == -1) {
-                    Log.e("Stripnumberinstp", "call" + stripNumber);
+                if(isFromStripTryOut){
+                    isFromStripTryOut=false;
+                    if (qubeTestDataInterface != null) {
+                        qubeTestDataInterface.onMovingToStripTrayOut("");
+                    }
+                    Log.e("isFromStripTryOut", "call" + isFromStripTryOut);
+                }else if (stripNumber == -1) {
+                    Log.e("waitfor20min", "call");
                     (new Timer()).schedule(new TimerTask() {
                         public void run() {
                             requestCommand = Commands.UV_TURN_ON;
                             ledControl(true);
                         }
-                    }, 1000L);
+                    }, 20 * (60*1000));
                 } else if (stripNumber != motorSteps.size() - 1) {
                     Log.e("Strip Number:", "" + stripNumber);
                     (new Timer()).schedule(new TimerTask() {
@@ -435,7 +442,7 @@ public class QUBETestingController {
                             getIntensity();
                         }
                     }, 1000L);
-                } else { // if testing completed
+                } else{ // if testing completed
                     Log.e("stripnumber0called", "call");
                     stripNumber = -1;
                     requestCommand = Commands.UV_TURN_OFF;
@@ -634,14 +641,21 @@ public class QUBETestingController {
 
         void onFailureForTesting(String var1);
 
+        void onMovingToStripTrayOut(String var1);
+
         void isSyncingCompleted(boolean val, ArrayList<Float> standardWhiteIntensityArray);
 
         void gettingDarkSpectrum(boolean val, ArrayList<Float> standardWhiteIntensityArray);
     }
-
+    //step1
+    public void performStripTrayOutCommand() {
+        isFromStripTryOut=true;
+        SCConnectionHelper.getInstance().prepareCommandForMotorMove(120, "MLS");//for CCW-use MLS
+    }
+    //step2
     public void startTesting() {
         stripNumber = -1;
-        SCConnectionHelper.getInstance().prepareCommandForMotorMove(250, "MRS");
+        SCConnectionHelper.getInstance().prepareCommandForMotorMove(250, "MRS");//for CW -use MRS
     }
 
     // for calibration
