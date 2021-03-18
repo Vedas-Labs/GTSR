@@ -38,6 +38,7 @@
                 android:layout_centerVertical="true"
                 android:text="Sample Ready"
                 android:textStyle="bold"
+                android:fontFamily="@font/montserrat"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
 
@@ -106,7 +107,7 @@
                         android:textColor="@color/colorBlack"
                         android:layout_toRightOf="@id/img_1"
                         android:fontFamily="@font/montserrat"
-                        android:text="@string/collect"
+                        android:text="@string/sample_one"
                         android:textSize="14sp" />
 
                 </RelativeLayout>
@@ -146,7 +147,7 @@
                         android:layout_toRightOf="@id/img_2"
                         android:fontFamily="@font/montserrat"
                         android:textColor="@color/colorBlack"
-                        android:text="@string/waiting_for"
+                        android:text="@string/sample_two"
                         android:textSize="14sp"
 
                         />
@@ -168,7 +169,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 app:cardCornerRadius="10dp">
 
                 <RelativeLayout
@@ -190,7 +192,7 @@
                         android:layout_toRightOf="@id/img_3"
                         android:textColor="@color/colorBlack"
                         android:fontFamily="@font/montserrat"
-                        android:text="@string/waiting_for"
+                        android:text="@string/sample_three"
                         android:textSize="14sp"
 
                         />

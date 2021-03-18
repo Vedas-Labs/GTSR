@@ -120,4 +120,36 @@
            android:layout_marginBottom="10dp"
            android:src="@drawable/testnow" />
    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:id="@+id/img_antibody"
+        android:layout_height="150dp">
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:src="@drawable/testnow" />
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:src="@drawable/testnow" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="false"
+            android:textColor="@color/colorLightGray"
+            android:text="App Version v1.0"
+            android:focusable="false"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/testnow" />
+    </RelativeLayout>
 </RelativeLayout>

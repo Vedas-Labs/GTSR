@@ -28,9 +28,11 @@ import com.gtsr.gtsr.R;
 import com.gtsr.gtsr.RefreshShowingDialog;
 import com.gtsr.gtsr.adapter.SelectStripAdapter;
 import com.gtsr.gtsr.dataController.LanguageTextController;
+import com.gtsr.gtsr.qubeTestResults.QubePatientInfoActivity;
 import com.gtsr.gtsr.qubeTestResults.QubeSampleReadyActivity;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
+import com.spectrochips.spectrumsdk.FRAMEWORK.SpectroCareSDK;
 import com.spectrochips.spectrumsdk.FRAMEWORK.TestFactors;
 import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
 import com.spectrochips.spectrumsdk.MODELS.SpectroDeviceDataController;
@@ -64,9 +66,10 @@ public class SelectTestStripActivity extends AppCompatActivity {
 
          selectedPosition=-1;
         SpectroDeviceDataController.getInstance().fillContext(getApplicationContext());
+        SpectroCareSDK.getInstance().fillContext(getApplicationContext());
+        SCTestAnalysis.getInstance().fillContext(getApplicationContext());
         SCTestAnalysis.getInstance().startTestProcess();
         SCTestAnalysis.getInstance().initializeService();
-        // SCTestAnalysis.getInstance().fillContext(getApplicationContext());
         QUBETestingController.getInstance().fillContext(getApplicationContext());
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +119,7 @@ public class SelectTestStripActivity extends AppCompatActivity {
     }
 
     private void loadDummyCommands() {
-       /* SCTestAnalysis.getInstance().isTestingCal = true;
+        SCTestAnalysis.getInstance().isTestingCal = true;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -124,7 +127,7 @@ public class SelectTestStripActivity extends AppCompatActivity {
                     SCTestAnalysis.getInstance().sendString("$SUV0#");
                 }
             }
-        }, 2000 * 1);*/
+        }, 2000 * 1);
     }
 
     private void loadFileWithFileName(final String fileNmae, final String category, final String date) {

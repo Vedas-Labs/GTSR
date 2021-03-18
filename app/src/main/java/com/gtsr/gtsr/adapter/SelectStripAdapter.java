@@ -31,7 +31,7 @@ public class SelectStripAdapter extends RecyclerView.Adapter<SelectStripAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull StripHolder holder, int position) {
-       holder.testName.setText("CUBE_Covid19 Test strip");
+       holder.testName.setText(/*"CUBE_Covid19 Test strip"*/"i-Mitox SARS-CoV2 Urine Antibody Test Strip");
         if (SelectTestStripActivity.selectedPosition == position) {
             Log.e("if", "" + position);
             holder.image.setVisibility(View.VISIBLE);

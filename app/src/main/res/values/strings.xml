@@ -20,5 +20,11 @@
     <string name="lessthan9"><![CDATA[<0.9]]></string>
     <string name="collect">Collect test sample with text strip. Never let the liquid level exceed the block line</string>
     <string name="waiting_for">Waiting for results to be observed with a clear band on control line with or with out test line. (5–15 minutes)</string>
+    <string name="waiting_for_new">Insert the test strip into the QUBE device. Press the STAR TEST to analiyze the result.</string>
+
+
+    <string name="sample_one">Collect sample with test strip. Do not immerse liquid pass the mark line. </string>
+    <string name="sample_two">Insert the test strip into the strip holder in QUBE. The mark arrows must be aligned to make sure the test strip position.</string>
+    <string name="sample_three">Now it is ready! Press START TEST to analyze the test result.</string>
 
 </resources>

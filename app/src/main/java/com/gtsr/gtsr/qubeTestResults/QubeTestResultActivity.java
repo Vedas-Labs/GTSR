@@ -144,7 +144,7 @@ public class QubeTestResultActivity extends AppCompatActivity {
     private void loadCurrentModelData() {
         if (currentTestFactor != null) {
             txt_result.setText(currentTestFactor.getResult());
-            txt_condition.setText(currentTestFactor.getHealthReferenceRanges());
+           txt_condition.setText(currentTestFactor.getHealthReferenceRanges());
             txt_value.setText(currentTestFactor.getValue()+" index");
 
             if(currentTestFactor.getResult().equals("Positive")){
@@ -167,6 +167,13 @@ public class QubeTestResultActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            txt_resultMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(),QubeTestingActivity.class));
+                }
+            });
         }
     }
     public Bitmap bitmapGetBitmapFromView(RelativeLayout view) {

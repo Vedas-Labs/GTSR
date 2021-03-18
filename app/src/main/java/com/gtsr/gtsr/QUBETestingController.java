@@ -106,7 +106,6 @@ public class QUBETestingController {
             Log.e("loadDefaultSpect", "call" + spectroDeviceObject.getStripControl().getDistanceFromHolderEdgeTo1STStripInMM());
             Log.e("loadDefaultSpect", "call" + motorSteps.size());
         }
-
     }
 
     public void loadInterface() {
@@ -157,7 +156,6 @@ public class QUBETestingController {
         for (int i = 0; i < pixelXAxis.size(); ++i) {
             wavelengthXAxis.add(pixelXAxis.get(i));
         }
-
         Log.e("reprocessWavelength", "call" + wavelengthXAxis.toString());
         wavelengthXAxis.clear();
         if (spectroDeviceObject.getWavelengthCalibration() != null) {
@@ -433,7 +431,7 @@ public class QUBETestingController {
                             requestCommand = Commands.UV_TURN_ON;
                             ledControl(true);
                         }
-                    }, 20 * (60*1000));
+                    }, 1 * (60*1000));// timer for 20 mints
                 } else if (stripNumber != motorSteps.size() - 1) {
                     Log.e("Strip Number:", "" + stripNumber);
                     (new Timer()).schedule(new TimerTask() {

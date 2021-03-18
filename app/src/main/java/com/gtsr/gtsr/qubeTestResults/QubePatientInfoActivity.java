@@ -1,44 +1,40 @@
 package com.gtsr.gtsr.qubeTestResults;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.gtsr.gtsr.Constants;
 import com.gtsr.gtsr.QUBETestingController;
 import com.gtsr.gtsr.R;
 import com.gtsr.gtsr.RefreshShowingDialog;
-import com.gtsr.gtsr.dataController.QubeController;
 import com.gtsr.gtsr.database.TestFactorDataController;
 import com.gtsr.gtsr.database.UrineResultsDataController;
 import com.gtsr.gtsr.database.UrineresultsModel;
-import com.gtsr.gtsr.testModule.AnalizingPageViewController;
-import com.gtsr.gtsr.testModule.ResultPageViewController;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
-import com.spectrochips.spectrumsdk.FRAMEWORK.SCTestAnalysis;
 import com.spectrochips.spectrumsdk.FRAMEWORK.TestFactors;
 import com.spectrochips.spectrumsdk.MODELS.IntensityChart;
 
 import java.util.ArrayList;
 
-public class QubeSampleReadyActivity extends AppCompatActivity {
+public class QubePatientInfoActivity extends AppCompatActivity {
     Button btnNext;
     RefreshShowingDialog refreshShowingDialog, stripTrayOutDialogue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qube_sample_ready);
+        setContentView(R.layout.activity_qube_patientinfo);
         btnNext = findViewById(R.id.btn_start);
-        refreshShowingDialog = new RefreshShowingDialog(QubeSampleReadyActivity.this, "testing..");
+        refreshShowingDialog = new RefreshShowingDialog(QubePatientInfoActivity.this, "testing..");
 
-        stripTrayOutDialogue = new RefreshShowingDialog(QubeSampleReadyActivity.this, "Moving Strip Out..");
+        stripTrayOutDialogue = new RefreshShowingDialog(QubePatientInfoActivity.this, "Moving Strip Out..");
         loadInterfaces();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override

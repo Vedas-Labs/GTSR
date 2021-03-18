@@ -55,6 +55,7 @@ import com.gtsr.gtsr.testModule.MyApplication;
 import com.gtsr.gtsr.testModule.PairDeviceViewController;
 import com.gtsr.gtsr.testModule.PastResultsActivity;
 import com.gtsr.gtsr.testModule.ResultPageViewController;
+import com.gtsr.gtsr.testModule.SelectTestStripActivity;
 import com.gtsr.gtsr.testModule.TestActivity;
 import com.spectrochips.spectrumsdk.FRAMEWORK.SCConnectionHelper;
 
@@ -412,7 +413,8 @@ public class HomeActivity extends AppCompatActivity {
                     Log.e("darkArrayisempty", "call");
                     doCalibrationAlert();
                 }else{
-                    startActivity(new Intent(getApplicationContext(), PairDeviceViewController.class));
+                  //  startActivity(new Intent(getApplicationContext(), SelectTestStripActivity.class));
+                      startActivity(new Intent(getApplicationContext(), PairDeviceViewController.class));
                 }
             }
         });
